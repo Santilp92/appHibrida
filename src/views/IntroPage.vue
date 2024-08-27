@@ -29,7 +29,7 @@ export default {
       this.$router.push('/login');
     },
     goToSignup() {
-      this.$router.push('/signup');
+      this.$router.push('/Signup');
     },
   },
 };
