@@ -2,11 +2,12 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import HomePage from '../views/HomePage.vue'
 import IntroPage from '../views/IntroPage.vue';
 import LoginPage from '../views/LoginPage.vue';
+import Menu from '../components/Menu.vue';
 
 const routes= [
   {
     path: '/',
-    redirect: '/intro'
+    redirect: '/home'
   },
   {
     path: '/intro',
@@ -18,12 +19,32 @@ const routes= [
     name: 'Login',
     component: LoginPage
   },
-
   {
-    path: '/home',
-    name: 'Home',
-    component: HomePage
-  }
+    path: '/',
+    component: Menu,
+    children: [
+      {
+        path: '',
+        redirect: '/home',
+      },
+      {
+        path: 'home',
+        component: () => import('../views/HomePage.vue'),
+      },
+      {
+        path: 'categories',
+        component: () => import('../views/CategoriesPage.vue'),
+      },
+      {
+        path: 'cart',
+        component: () => import('../views/CartPage.vue'),
+      },
+      {
+        path: 'account',
+        component: () => import('../views/AccountPage.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

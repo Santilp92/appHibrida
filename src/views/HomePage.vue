@@ -1,56 +1,101 @@
+<style scoped>
+.example-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+</style>
+
 <template>
-  <ion-page>
-    <ion-header :translucent="true">
+  <!-- Contenido principal -->
+  <ion-page id="main-content">
+    <ion-header>
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        Logo de Tienda Online
+        <ion-buttons slot="primary">
+          <ion-button fill="solid">
+            Ingresar
+            <ion-icon slot="end" :icon="personCircle"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-searchbar placeholder="Buscar en Tienda Online"></ion-searchbar>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <!-- Puede servir para realizar un listado general de producto -->
+    <!-- <ion-content>
+      <ion-list>
+        <RecycleScroller class="scroller no-scrollbar" :items="list" :item-size="56">
+          <template #default="{ item }">
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="https://picsum.photos/seed/picsum/40/40" />
+              </ion-avatar>
+              <ion-label>{{ item }}</ion-label>
+            </ion-item>
+          </template>
+        </RecycleScroller>
+      </ion-list>
+    </ion-content> -->
 
-      <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-      </div>
+    <ion-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>tv</ion-col>
+          <ion-col>portatiles</ion-col>
+          <ion-col>celular</ion-col>
+          <ion-col>accesorios</ion-col>
+          <ion-col>3</ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-content>
   </ion-page>
 </template>
-
 <script>
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonSearchbar,
+  IonButtons,
+  IonMenu,
+  IonMenuButton,
+  IonButton,
+  IonAvatar,
+  IonItem,
+  IonLabel,
+} from "@ionic/vue";
+
+import { personCircle, list } from "ionicons/icons";
+
+export default {
+  components: {
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonPage,
+    IonSearchbar,
+    IonButtons,
+    IonMenu,
+    IonMenuButton,
+    IonButton,
+    IonAvatar,
+    IonItem,
+    IonLabel,
+  },
+  data() {
+    const list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    return {
+      personCircle,
+      list,
+    };
+  },
+};
 </script>
-
-<style scoped>
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-</style>
