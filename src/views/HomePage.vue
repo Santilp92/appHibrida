@@ -44,11 +44,13 @@
     <ion-content>
       <ion-grid>
         <ion-row>
-          <ion-col>tv</ion-col>
-          <ion-col>portatiles</ion-col>
-          <ion-col>celular</ion-col>
-          <ion-col>accesorios</ion-col>
-          <ion-col>3</ion-col>
+          <ion-col>
+            <ion-title> Bienvenido a la tienda online </ion-title>
+            <p>
+              Esta es la pagina de venta de productos online más grande de
+              colombia, con los mayoes descuentos.
+            </p>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-content>
