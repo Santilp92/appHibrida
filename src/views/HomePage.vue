@@ -1,16 +1,7 @@
-<style scoped>
-.example-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-</style>
-
 <template>
   <!-- Contenido principal -->
   <ion-page id="main-content">
-    <ion-header>
+    <!-- <ion-header>
       <ion-toolbar>
         Logo de Tienda Online
         <ion-buttons slot="primary">
@@ -23,7 +14,7 @@
       <ion-toolbar>
         <ion-searchbar placeholder="Buscar en Tienda Online"></ion-searchbar>
       </ion-toolbar>
-    </ion-header>
+    </ion-header> -->
 
     <!-- Puede servir para realizar un listado general de producto -->
     <!-- <ion-content>
@@ -40,8 +31,11 @@
         </RecycleScroller>
       </ion-list>
     </ion-content> -->
+    <ion-header>
+      <ion-toolbar>Encabesado</ion-toolbar>
+    </ion-header>
 
-    <ion-content>
+    <ion-content class="home-content">
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -57,6 +51,7 @@
   </ion-page>
 </template>
 <script>
+
 import {
   IonHeader,
   IonToolbar,
@@ -101,3 +96,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+.home-content {
+  padding-top: 106px; /* Ajusta según la altura del Searchbar y el toolbar */
+}
+</style>
