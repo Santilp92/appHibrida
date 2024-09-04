@@ -32,7 +32,10 @@
       </ion-list>
     </ion-content> -->
     <ion-header>
-      <ion-toolbar>Encabesado</ion-toolbar>
+      <ion-toolbar>
+        <log-in />
+        <searchbar />
+      </ion-toolbar>
     </ion-header>
 
     <ion-content class="home-content">
@@ -51,6 +54,8 @@
   </ion-page>
 </template>
 <script>
+import Searchbar from  '../components/Searchbar.vue';
+import LogIn from '../components/LogIn.vue';
 
 import {
   IonHeader,
@@ -85,6 +90,8 @@ export default {
     IonAvatar,
     IonItem,
     IonLabel,
+    Searchbar,
+    LogIn,
   },
   data() {
     const list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

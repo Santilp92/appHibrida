@@ -1,10 +1,8 @@
 <!-- Searchbar.vue -->
 <template>
-  <ion-header>
-    <ion-toolbar>
+  
       <ion-searchbar placeholder="Buscar en Tienda Online"></ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
+    
 </template>
 
 <script>
