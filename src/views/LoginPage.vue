@@ -1,78 +1,102 @@
+
 <template>
+  <ion-page>
     <ion-content>
       <!-- Background Images -->
-      <div class="background-container">
-            <ion-img src="/assets/top_background.png" class="top-background-img"></ion-img>
-      <div class="overlay-content">
-        <ion-item class="welcome-text">
-          <ion-label>Bienvenido Nuevamente</ion-label>
-        </ion-item>
-      </div>
-    </div>
-      
+      <ion-grid class="background-container">
+        <ion-row>
+          <ion-img
+            src="/assets/top_background.png"
+            class="top-background-img"
+          ></ion-img>
+          <ion-col class="overlay-content">
+            <ion-item class="welcome-text">
+              <ion-label>Bienvenido Nuevamente</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
       <!-- Scrollable Content -->
-       <ion-list>
-        
-          <ion-item class="input-container">
-        <img src="/public/assets/email.png" class="input-icon" alt="Email Icon" />
-        <ion-input
-          placeholder="Correo Electronico"
-          type="text"
-          clearInput
-          class="input-field"
-        ></ion-input>
-      </ion-item>
-          <ion-item>
-            <img src="/public/assets/password.png" class="input-icon" alt="Email Icon" />
-            <ion-input
-              placeholder="Contraseña"
-              type="password"
-              clearInput
-              class="input-field"
-            ></ion-input>
-          </ion-item>
-  
-          <!-- Buttons -->
-          <div class="custom-button" @click="handleClick">
-        <img src="@/assets/btn_login.png" alt="Login Button" class="login-image" />
-      </div>
-  
-          <ion-button class="social-button">
-            <ion-img src="/public/assets/google.png" class="button-icon"></ion-img>
-            Ingresar con Google
-          </ion-button>
-          <ion-button class="social-button">
-            <ion-img src="/public/assets/facebook.png" class="button-icon"></ion-img>
-            Ingresar con Facebook
-          </ion-button>
-  
-          <!-- Text Link -->
-          <ion-item class="new-user">
-            <ion-label>¿Eres usuario nuevo?</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-  </template>
-  
-  <script>
-  export default {
-    name: 'LoginPage',
-    methods: {
-      handleClick() {
-        // Lógica para manejar el clic del botón
-        console.log('Botón clickeado!');
-      }
-    }
-  }
-  </script>
-  
-  <style scoped>
+      <ion-list>
+        <ion-item class="input-container">
+          <ion-img
+            src="/public/assets/email.png"
+            class="input-icon"
+            alt="Email Icon"
+          />
+          <ion-input
+            placeholder="Correo Electronico"
+            type="text"
+            clearInput
+            class="input-field"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-img
+            src="/public/assets/password.png"
+            class="input-icon"
+            alt="Email Icon"
+          />
+          <ion-input
+            placeholder="Contraseña"
+            type="password"
+            clearInput
+            class="input-field"
+          ></ion-input>
+        </ion-item>
+
+        <!-- Buttons -->
+        <ion-button class="custom-button" @click="handleClick">
+          <ion-img
+            src="@/assets/btn_login.png"
+            alt="Login Button"
+            class="login-image"
+          />
+        </ion-button>
+
+        <ion-button class="social-button">
+          <ion-img
+            src="/public/assets/google.png"
+            class="button-icon"
+          ></ion-img>
+          Ingresar con Google
+        </ion-button>
+        <ion-button class="social-button">
+          <ion-img
+            src="/public/assets/facebook.png"
+            class="button-icon"
+          ></ion-img>
+          Ingresar con Facebook
+        </ion-button>
+
+        <!-- Text Link -->
+        <ion-item class="new-user">
+          <ion-label>¿Eres usuario nuevo?</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script>
+export default {
+  name: "LoginPage",
+  methods: {
+    handleClick() {
+      // Lógica para manejar el clic del botón
+      console.log("Botón clickeado!");
+    },
+  },
+};
+</script>
+
+<style scoped>
 .background-container {
   position: relative; /* Permite el posicionamiento absoluto de los hijos */
   width: 100%;
   height: 300px; /* Ajusta según el tamaño deseado */
 }
-
 
 .top-background-img {
   position: absolute;
@@ -87,17 +111,20 @@
   position: absolute; /* Posiciona el contenido sobre la imagen de fondo */
   top: 86.5%; /* Centra verticalmente */
   left: 35%; /* Centra horizontalmente */
-  transform: translate(-50%, -50%); /* Ajusta el posicionamiento para un centrado exacto */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Ajusta el posicionamiento para un centrado exacto */
   width: 100%;
   display: flex; /* Usa flexbox para centrar el contenido */
   align-items: center; /* Centra verticalmente */
   justify-content: center; /* Centra horizontalmente */
   z-index: 3; /* Asegura que el contenido esté sobre las imágenes de fondo */
-  background:transparent; 
+  background: transparent;
 }
 
 .welcome-text {
-  background: transparent; 
+  background: transparent;
   background-color: transparent;
   border: none; /* Elimina el borde del ion-item si es necesario */
   box-shadow: none; /* Elimina cualquier sombra si es necesario */
@@ -105,7 +132,6 @@
   font-weight: bold;
   color: #603a91;
   padding: 0;
-  
 }
 
 .input-container {
@@ -161,16 +187,13 @@ ion-button {
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-  display: flex; 
-  justify-content: center; 
+  display: flex;
+  justify-content: center;
 }
-.button-icon{
+.button-icon {
   background-color: #ffffff00;
   background: #ffffff00;
-  
 }
-
-
 
 .social-button {
   background: #ffffff;
@@ -181,13 +204,12 @@ ion-button {
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-  display: flex; 
-  justify-content: center; 
+  display: flex;
+  justify-content: center;
 }
 
 .button-icon {
   margin-right: 8px;
-  
 }
 
 .new-user {

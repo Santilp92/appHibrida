@@ -1,23 +1,10 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import HomePage from '../views/HomePage.vue'
-import IntroPage from '../views/IntroPage.vue';
-import LoginPage from '../views/LoginPage.vue';
 import Menu from '../components/Menu.vue';
 
 const routes= [
   {
     path: '/',
     redirect: '/home'
-  },
-  {
-    path: '/intro',
-    name: 'Intro',
-    component: IntroPage
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/LoginPage.vue'),
   },
   {
     path: '/',
