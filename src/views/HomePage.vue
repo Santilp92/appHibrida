@@ -33,7 +33,7 @@
     </ion-content> -->
     <ion-header>
       <ion-toolbar>
-        <log-in />
+        <!-- <log-in /> -->
         <searchbar />
       </ion-toolbar>
     </ion-header>
