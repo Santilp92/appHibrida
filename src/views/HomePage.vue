@@ -42,11 +42,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <img
-              src="../assets/logo.png"
-              alt="Logo"
-              class="logo"
-            />
+            <img src="../assets/logo.png" alt="Logo" class="logo" />
           </ion-col>
         </ion-row>
       </ion-grid>
