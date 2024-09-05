@@ -6,7 +6,7 @@
       <ion-grid class="background-container">
         <ion-row>
           <ion-img
-            src="/assets/top_background.png"
+            src="../assets/top_background.png"
             class="top-background-img"
           ></ion-img>
           <ion-col class="overlay-content">

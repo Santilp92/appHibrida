@@ -33,12 +33,23 @@
     </ion-content> -->
     <ion-header>
       <ion-toolbar>
-        <login />
+        <log-in />
         <searchbar />
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="home-content">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-img
+              src="/src/assets/logo.png"
+              alt="Logo"
+              class="logo"
+            ></ion-img>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -54,8 +65,8 @@
   </ion-page>
 </template>
 <script>
-import Searchbar from  '../components/Searchbar.vue';
-import Login from '../components/Login.vue';
+import LogIn from "../components/LogIn.vue";
+import Searchbar from "../components/Searchbar.vue";
 
 import {
   IonHeader,
@@ -71,6 +82,10 @@ import {
   IonAvatar,
   IonItem,
   IonLabel,
+  IonImg,
+  IonGrid,
+  IonCol,
+  IonRow,
 } from "@ionic/vue";
 
 import { personCircle, list } from "ionicons/icons";
@@ -91,7 +106,11 @@ export default {
     IonItem,
     IonLabel,
     Searchbar,
-    Login,
+    LogIn,
+    IonImg,
+    IonGrid,
+    IonCol,
+    IonRow,
   },
   data() {
     const list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -105,7 +124,6 @@ export default {
 </script>
 
 <style scoped>
-
 .home-content {
   padding-top: 106px; /* Ajusta según la altura del Searchbar y el toolbar */
 }
