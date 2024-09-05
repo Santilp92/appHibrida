@@ -1,36 +1,6 @@
 <template>
   <!-- Contenido principal -->
   <ion-page id="main-content">
-    <!-- <ion-header>
-      <ion-toolbar>
-        Logo de Tienda Online
-        <ion-buttons slot="primary">
-          <ion-button fill="solid">
-            Ingresar
-            <ion-icon slot="end" :icon="personCircle"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-      <ion-toolbar>
-        <ion-searchbar placeholder="Buscar en Tienda Online"></ion-searchbar>
-      </ion-toolbar>
-    </ion-header> -->
-
-    <!-- Puede servir para realizar un listado general de producto -->
-    <!-- <ion-content>
-      <ion-list>
-        <RecycleScroller class="scroller no-scrollbar" :items="list" :item-size="56">
-          <template #default="{ item }">
-            <ion-item>
-              <ion-avatar slot="start">
-                <img src="https://picsum.photos/seed/picsum/40/40" />
-              </ion-avatar>
-              <ion-label>{{ item }}</ion-label>
-            </ion-item>
-          </template>
-        </RecycleScroller>
-      </ion-list>
-    </ion-content> -->
     <ion-header>
       <ion-toolbar>
         <log-in />
@@ -38,31 +8,60 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="home-content">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <img src="../assets/logo.png" alt="Logo" class="logo" />
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-title> Bienvenido a la tienda online </ion-title>
-            <p>
-              Esta es la pagina de venta de productos online más grande de
-              colombia, con los mayoes descuentos.
-            </p>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+    <ion-content>
+      <ion-card>
+        <img src="../assets/logo.png" alt="Logo" />
+        <ion-card-header>
+          <ion-card-title>Bienvenidos a la tienda online</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Esta es la pagina de venta de productos online más grande de colombia,
+          con los mayoes descuentos.
+        </ion-card-content>
+      </ion-card>
+
+      <ion-list>
+        <ion-list-header>
+          <ion-label>PRODUCTOS DESTACADOS</ion-label>
+        </ion-list-header>
+
+        <RecycleScroller
+          class="scroller no-scrollbar"
+          :items="list"
+          :item-size="160"
+          direction="horizontal"
+        >
+          <template #default="{ item }">
+            <ion-card class="item-card">
+              <ion-img
+                class="card-img"
+                :src="`https://picsum.photos/seed/picsum/100/150?random=${item}`"
+                alt="Producto"
+              />
+              <ion-card-header>
+                <ion-card-title class="title">Título {{ item }}</ion-card-title>
+                <ion-card-subtitle class="subtitle"
+                  >Subtítulo {{ item }}</ion-card-subtitle
+                >
+              </ion-card-header>
+              <ion-card-content class="description">
+                Descripción larga de producto {{ item }}. Esta descripción es un
+                ejemplo para mostrar cómo se verá cuando sea más larga de lo
+                esperado.
+              </ion-card-content>
+            </ion-card>
+          </template>
+        </RecycleScroller>
+      </ion-list>
     </ion-content>
   </ion-page>
 </template>
+
 <script>
 import LogIn from "../components/LogIn.vue";
 import Searchbar from "../components/Searchbar.vue";
+import { RecycleScroller } from "vue-virtual-scroller";
 
 import {
   IonHeader,
@@ -79,9 +78,13 @@ import {
   IonItem,
   IonLabel,
   IonImg,
-  IonGrid,
-  IonCol,
-  IonRow,
+  IonCard,
+  IonCardHeader,
+  IonCardContent,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonList,
+  IonListHeader
 } from "@ionic/vue";
 
 import { personCircle, list } from "ionicons/icons";
@@ -104,9 +107,14 @@ export default {
     Searchbar,
     LogIn,
     IonImg,
-    IonGrid,
-    IonCol,
-    IonRow,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
+    IonCardTitle,
+    IonCardSubtitle,
+    RecycleScroller,
+    IonList,
+    IonListHeader
   },
   data() {
     const list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -116,11 +124,58 @@ export default {
       list,
     };
   },
+  mounted() {
+    console.log("Component mounted!"); // Mensaje en la consola al montar el componente
+    console.log(this.list); // Verifica que la lista esté correctamente inicializada
+  },
 };
 </script>
 
 <style scoped>
-.home-content {
-  padding-top: 106px; /* Ajusta según la altura del Searchbar y el toolbar */
+.scroller {
+  display: flex;
+  flex-direction: row; /* Asegura que los elementos se alineen horizontalmente */
+  overflow-x: auto; /* Habilita el desplazamiento horizontal */
+  overflow-y: hidden; /* Deshabilita el desplazamiento vertical */
+  height: 250px; /* Establece la altura para hacer las cards más grandes */
+  margin-right: 10px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none; /* Para Firefox */
+  -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Para Chrome, Safari y Opera */
+}
+
+.item-card {
+  width: 150px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-img {
+  height: 120px; /* Tamaño de la imagen */
+  object-fit: cover;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: gray;
+}
+
+.description {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Muestra puntos suspensivos cuando el texto es muy largo */
 }
 </style>
