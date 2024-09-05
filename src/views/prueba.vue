@@ -1,112 +1,113 @@
 <style scoped>
-  .background-container {
-  position: relative; /* Permite el posicionamiento absoluto de los hijos */
+.background-container {
+  position: relative; 
   width: 100%;
-  height: 300px; /* Ajusta según el tamaño deseado */
+  height: 300px; 
 }
 
 .top-background-img {
   position: absolute;
   width: 100%;
+  height: 100%;
   object-fit: cover;
   top: 0;
   left: 0;
-  z-index: 2; /* Asegura que esta imagen esté sobre la imagen de fondo */
+  z-index: -2; 
 }
 
 .overlay-content {
-  position: absolute; /* Posiciona el contenido sobre la imagen de fondo */
-  top: 86.5%; /* Centra verticalmente */
-  left: 35%; /* Centra horizontalmente */
-  transform: translate(
-    -50%,
-    -50%
-  ); /* Ajusta el posicionamiento para un centrado exacto */
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
   width: 100%;
-  display: flex; /* Usa flexbox para centrar el contenido */
-  align-items: center; /* Centra verticalmente */
-  justify-content: center; /* Centra horizontalmente */
-  z-index: 3; /* Asegura que el contenido esté sobre las imágenes de fondo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3; 
   background: transparent;
 }
 
 .welcome-text {
-  background: transparent;
   background-color: transparent;
-  border: none; /* Elimina el borde del ion-item si es necesario */
-  box-shadow: none; /* Elimina cualquier sombra si es necesario */
   font-size: 35px;
   font-weight: bold;
   color: #603a91;
   padding: 0;
+  margin-bottom: 35px;
+}
+
+.DATOSCONTENEDOR {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-container {
+  position: relative;
   display: flex;
   align-items: center;
-  margin: 16px 0; /* Espacio entre los campos de entrada */
+  margin: 16px 0;
 }
 
 .input-icon {
-  width: 24px; /* Ajusta el tamaño del ícono */
+  position: absolute;
+  top: 50%; 
+  left: 10px; 
+  transform: translateY(-50%);
+  width: 24px;
   height: 24px;
-  margin-right: 8px; /* Espacio entre la imagen y el campo de entrada */
+  z-index: 1; 
+  pointer-events: none; 
 }
 
 .input-field {
-  flex: 1; /* Ocupa el espacio restante del contenedor */
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --color-placeholder: #603a91;
+  flex: 1; 
+  padding-left: 40px; 
+  --color: #000000; /* Color del texto de entrada */
+  --color-placeholder: #603a91; /* Color del texto del placeholder */
   --background: #ffffff;
+  color: #000000; /* Asegura que el texto ingresado sea negro */
+  z-index: 5;
 }
-
 
 .custom-button {
   display: flex;
-  justify-content: right;
-  margin-right: 20px;
-  cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
+  justify-content: flex-end; 
+  cursor: pointer;
   margin-top: 10px;
+  width: 100%;
+}
+
+.image-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
 }
 
 .login-image {
-  width: 130px; /* Ajusta el tamaño de la imagen */
-  height: 85px; /* Ajusta la altura de la imagen */
+  width: 130px; 
+  height: 85px; 
 }
 
 .social-button {
   background: #ffffff;
   margin-top: 16px;
-  width: auto; /* Ajusta el ancho */
+  width: 100%;
   max-width: 300px;
+  display: flex;
   justify-content: center;
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-  display: flex;
-  justify-content: center;
-}
-.button-icon {
-  background-color: #ffffff00;
-  background: #ffffff00;
-}
-
-.social-button {
-  background: #ffffff;
-  margin-top: 16px;
-  width: auto; /* Ajusta el ancho */
-  max-width: 300px;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  justify-content: center;
+  border-radius: 50px; 
+  border: 1px solid #603a91; 
 }
 
 .button-icon {
   margin-right: 8px;
+  background-color: transparent;
 }
 
 .new-user {
@@ -119,75 +120,55 @@
 <template>
   <ion-page>
     <ion-content>
-      <!-- Background Images -->
       <ion-grid class="background-container">
         <ion-row>
-          <img
-            src="../assets/top_background.png"
-            class="top-background-img"
-          />
+          <img src="../assets/top_background.png" class="top-background-img" />
           <ion-col class="overlay-content">
-            <ion-item class="welcome-text">
-              <ion-label>Bienvenido Nuevamente</ion-label>
-            </ion-item>
+            <ion-label class="welcome-text">Bienvenido Nuevamente</ion-label>
           </ion-col>
         </ion-row>
       </ion-grid>
 
-      <!-- Scrollable Content -->
       <ion-list>
-        <ion-item class="input-container">
-          <img
-            src="../assets/email.png"
-            class="input-icon"
-            alt="Email Icon"
-          />
-          <ion-input
-            placeholder="Correo Electronico"
-            type="text"
-            clearInput
-            class="input-field"
-          ></ion-input>
-        </ion-item>
-        <ion-item>
-          <img
-            src="../assets/password.png"
-            class="input-icon"
-            alt="Email Icon"
-          />
-          <ion-input
-            placeholder="Contraseña"
-            type="password"
-            clearInput
-            class="input-field"
-          ></ion-input>
-        </ion-item>
+        <div class="DATOSCONTENEDOR">
+          <ion-item class="input-container">
+            <img src="../assets/email.png" class="input-icon" alt="Email Icon" />
+            <ion-input
+              placeholder="Correo Electrónico"
+              type="text"
+              clear-input
+              class="input-field"
+              inputmode="email"
+            ></ion-input>
+          </ion-item>
 
-        <!-- Buttons -->
-        <ion-button class="custom-button" @click="handleClick">
-          <img
-            src="../assets/btn_login.png"
-            alt="Login Button"
-            class="login-image"
-          />
+          <ion-item class="input-container">
+            <img src="../assets/password.png" class="input-icon" alt="Password Icon" />
+            <ion-input
+              placeholder="Contraseña"
+              type="password"
+              clear-input
+              class="input-field"
+              inputmode="text"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <ion-button fill="clear" class="custom-button" @click="handleClick">
+          <div class="image-container">
+            <img src="../assets/btn_login.png" alt="Login Button" class="login-image" />
+          </div>
         </ion-button>
 
-        <ion-button class="social-button">
-          <img
-            src="../assets/google.png"
-            class="button-icon"
-          />
+        <ion-button fill="outline" shape="round" class="social-button">
+          <img src="../assets/google.png" class="button-icon" />
           Ingresar con Google
         </ion-button>
-        <ion-button class="social-button">
-          <img
-            src="../assets/facebook.png"
-            class="button-icon"
-          />
+        <ion-button fill="outline" shape="round" class="social-button">
+          <img src="../assets/facebook.png" class="button-icon" />
           Ingresar con Facebook
         </ion-button>
 
-        <!-- Text Link -->
         <ion-item class="new-user">
           <ion-label>¿Eres usuario nuevo?</ion-label>
         </ion-item>
@@ -197,17 +178,15 @@
 </template>
 
 <script>
-  import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage } from '@ionic/vue';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage } from '@ionic/vue';
 
-  export default {
-    name: "LoginPage",
-    components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
-    methods: {
+export default {
+  name: "LoginPage",
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
+  methods: {
     handleClick() {
-      // Lógica para manejar el clic del botón
       console.log("Botón clickeado!");
     },
   },
-  };
-  
+};
 </script>
