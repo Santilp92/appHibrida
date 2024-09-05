@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import Menu from '../components/Menu.vue';
 
+
 const routes= [
   {
     path: '/',
@@ -28,7 +29,7 @@ const routes= [
       },
       {
         path: 'account',
-        component: () => import('../views/LoginPage.vue'),
+        component: () => import('../views/prueba.vue'),
       },
     ],
   },

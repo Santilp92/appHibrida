@@ -5,10 +5,10 @@
       <!-- Background Images -->
       <ion-grid class="background-container">
         <ion-row>
-          <ion-img
+          <img
             src="../assets/top_background.png"
             class="top-background-img"
-          ></ion-img>
+          />
           <ion-col class="overlay-content">
             <ion-item class="welcome-text">
               <ion-label>Bienvenido Nuevamente</ion-label>
@@ -20,8 +20,8 @@
       <!-- Scrollable Content -->
       <ion-list>
         <ion-item class="input-container">
-          <ion-img
-            src="/public/assets/email.png"
+          <img
+            src="../assets/email.png"
             class="input-icon"
             alt="Email Icon"
           />
@@ -33,8 +33,8 @@
           ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-img
-            src="/public/assets/password.png"
+          <img
+            src="../assets/email.png"
             class="input-icon"
             alt="Email Icon"
           />
@@ -48,25 +48,25 @@
 
         <!-- Buttons -->
         <ion-button class="custom-button" @click="handleClick">
-          <ion-img
-            src="@/assets/btn_login.png"
+          <img
+            src="../assets/btn_login.png"
             alt="Login Button"
             class="login-image"
           />
         </ion-button>
 
         <ion-button class="social-button">
-          <ion-img
-            src="/public/assets/google.png"
+          <img
+            src="../assets/google.png"
             class="button-icon"
-          ></ion-img>
+          />
           Ingresar con Google
         </ion-button>
         <ion-button class="social-button">
-          <ion-img
-            src="/public/assets/facebook.png"
+          <img
+            src="../assets/facebook.png"
             class="button-icon"
-          ></ion-img>
+          />
           Ingresar con Facebook
         </ion-button>
 
@@ -80,8 +80,28 @@
 </template>
 
 <script>
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonSearchbar,
+  IonButtons,
+  IonMenu,
+  IonMenuButton,
+  IonButton,
+  IonAvatar,
+  IonItem,
+  IonLabel,
+  IonImg,
+  IonGrid,
+  IonCol,
+  IonRow,
+} from "@ionic/vue";
 export default {
   name: "LoginPage",
+  
   methods: {
     handleClick() {
       // Lógica para manejar el clic del botón
@@ -145,12 +165,7 @@ export default {
   height: 24px;
   margin-right: 8px; /* Espacio entre la imagen y el campo de entrada */
 }
-ion-button::after {
-  /* Si hay un estilo de sombra o borde aquí, ajusta o elimina */
-  box-shadow: none; /* Elimina cualquier sombra */
-  border: none; /* Elimina cualquier borde */
-  content: none; /* Si se utiliza content para algún efecto, elimínalo */
-}
+
 .input-field {
   flex: 1; /* Ocupa el espacio restante del contenedor */
   --padding-start: 16px;
@@ -158,12 +173,7 @@ ion-button::after {
   --color-placeholder: #603a91;
   --background: #ffffff;
 }
-ion-button {
-  --background: transparent; /* Cambia el color de fondo a transparente */
-  --color: #000000; /* Cambia el color del texto del botón si es necesario */
-  --border: none;
-  -box-shadow: none;
-}
+
 
 .custom-button {
   display: flex;
