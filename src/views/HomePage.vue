@@ -33,7 +33,7 @@
     </ion-content> -->
     <ion-header>
       <ion-toolbar>
-        <!-- <log-in /> -->
+        <login />
         <searchbar />
       </ion-toolbar>
     </ion-header>
@@ -55,7 +55,7 @@
 </template>
 <script>
 import Searchbar from  '../components/Searchbar.vue';
-import LogIn from '../components/LogIn.vue';
+import Login from '../components/Login.vue';
 
 import {
   IonHeader,
@@ -91,7 +91,7 @@ export default {
     IonItem,
     IonLabel,
     Searchbar,
-    LogIn,
+    Login,
   },
   data() {
     const list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
