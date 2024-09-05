@@ -1,18 +1,14 @@
 <!-- Searchbar.vue -->
 <template>
-  
-      <ion-searchbar placeholder="Buscar en Tienda Online"></ion-searchbar>
-    
+  <ion-searchbar placeholder="Buscar en Tienda"></ion-searchbar>
 </template>
 
 <script>
-import { IonSearchbar, IonToolbar, IonHeader } from "@ionic/vue";
+import { IonSearchbar, IonPage } from "@ionic/vue";
 
 export default {
   components: {
     IonSearchbar,
-    IonToolbar,
-    IonHeader
   },
 };
 </script>

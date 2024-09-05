@@ -1,47 +1,29 @@
-<!-- LogIn.vue -->
 <template>
-  
-      <!-- Logo -->
-      <!-- <img :src="logo" alt="Logo" class="logo" /> -->
-
-      
-      <ion-buttons slot="primary" v-if="!user">
-        <ion-button fill="solid" @click="login">Ingresar
-          <ion-icon slot="end" :icon="personCircle"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title v-else>
-        <ion-label>Hola, {{ user.displayName }}</ion-label>
-      </ion-title>
-    
+  <!-- Logo -->
+  <!-- <img :src="logo" alt="Logo" class="logo" /> -->
+  <ion-buttons slot="primary">
+    <ion-button fill="solid"
+      >Ingresar
+      <ion-icon slot="end" :icon="personCircle"></ion-icon>
+    </ion-button>
+  </ion-buttons>
 </template>
 
 <script>
-import { IonButton, IonLabel, IonToolbar } from "@ionic/vue";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { IonButton, IonIcon, IonButtons } from "@ionic/vue";
+
+import { personCircle } from "ionicons/icons";
 
 export default {
   components: {
     IonButton,
-    IonLabel,
-    IonToolbar,
+    IonButtons,
+    IonIcon,
   },
   data() {
     return {
-      user: null,
+      personCircle,
     };
-  },
-  created() {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      this.user = user;
-    });
-  },
-  methods: {
-    login() {
-      // Lógica para iniciar sesión
-    },
   },
 };
 </script>
-
