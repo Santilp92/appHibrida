@@ -3,15 +3,20 @@
     <ion-header>
       <ion-toolbar>
         <searchbar />
-        <filter />
       </ion-toolbar>
     </ion-header>
+
+    <ion-router-outlet />
 
     <ion-content class="ion-padding centrar-contenido">
       <ion-grid>
         <!-- Fila 1 -->
         <ion-row>
-          <ion-col v-for="category in categories.slice(0, 2)" :key="category.name" size="6">
+          <ion-col
+            v-for="category in categories.slice(0, 2)"
+            :key="category.name"
+            size="6"
+          >
             <ion-card button @click="selectCategory(category)">
               <ion-card-content>
                 <ion-avatar>
@@ -25,7 +30,11 @@
 
         <!-- Fila 2 -->
         <ion-row>
-          <ion-col v-for="category in categories.slice(2, 4)" :key="category.name" size="6">
+          <ion-col
+            v-for="category in categories.slice(2, 4)"
+            :key="category.name"
+            size="6"
+          >
             <ion-card button @click="selectCategory(category)">
               <ion-card-content>
                 <ion-avatar>
@@ -39,7 +48,11 @@
 
         <!-- Fila 3 -->
         <ion-row>
-          <ion-col v-for="category in categories.slice(4, 6)" :key="category.name" size="6">
+          <ion-col
+            v-for="category in categories.slice(4, 6)"
+            :key="category.name"
+            size="6"
+          >
             <ion-card button @click="selectCategory(category)">
               <ion-card-content>
                 <ion-avatar>
@@ -56,9 +69,25 @@
 </template>
 
 <script>
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonCard, IonCardContent, IonAvatar, IonLabel, IonGrid, IonRow, IonCol } from '@ionic/vue';
-import Searchbar from '../components/Searchbar.vue';
-import Filter from '../components/Filter.vue';
+import Searchbar from "../components/Searchbar.vue";
+import { useRouter } from "vue-router";
+import { useCategoryStore } from "../store/categoryStore";
+import { ref } from "vue";
+import { IonRouterOutlet } from '@ionic/vue';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonCard,
+  IonCardContent,
+  IonAvatar,
+  IonLabel,
+  IonGrid,
+  IonRow,
+  IonCol,
+} from "@ionic/vue";
 
 export default {
   components: {
@@ -75,46 +104,31 @@ export default {
     IonRow,
     IonCol,
     Searchbar,
-    Filter,
+    IonRouterOutlet
   },
-  data() {
+  setup() {
+    const categoryStore = useCategoryStore();
+    const router = useRouter();
+    const categories = ref([
+      { name: "PCyLaptops", image: "../assets/pc_laptops.png" },
+      { name: "Electrodomésticos", image: "../assets/electrodomesticos.png" },
+      { name: "Celulares", image: "../assets/celulares.png" },
+      { name: "Gaming", image: "../assets/gaming.png" },
+      { name: "IoT", image: "../assets/iot.png" },
+      { name: "Accesorios", image: "../assets/accesorios.png" },
+    ]);
+
+    const selectCategory = (category) => {
+      console.log("selectCategory called with:", category.name); // Agrega este log
+      categoryStore.setCategory(category.name);
+      router.push({ name: "products", params: { category: category.name } });
+      console.log(`Categoría seleccionada: ${category.name}`);
+    };
+
     return {
-      categories: [
-        { name: 'PC y Laptops', image: '../assets/pc_laptops.png' },
-        { name: 'Electrodomésticos', image: '../assets/electrodomesticos.png' },
-        { name: 'Celulares', image: '../assets/celulares.png' },
-        { name: 'Gaming', image: '../assets/gaming.png' },
-        { name: 'IoT', image: '../assets/iot.png' },
-        { name: 'Accesorios', image: '../assets/accesorios.png' }
-      ]
+      categories,
+      selectCategory,
     };
   },
-  methods: {
-    selectCategory(category) {
-      console.log(`Categoría seleccionada: ${category.name}`);
-      // Aquí puedes agregar la lógica para obtener el listado de productos
-      // según la categoría seleccionada
-    }
-  }
 };
 </script>
-
-<style scoped>
-/* Clase para centrar el contenido horizontal y verticalmente */
-.centrar-contenido {
-  display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center;     /* Centra verticalmente */
-  height: 100vh;           /* Ocupa toda la altura de la pantalla */
-}
-
-/* Estilos para las tarjetas */
-ion-card {
-  text-align: center;
-}
-
-ion-label {
-  margin-top: 8px;
-  display: block;
-}
-</style>

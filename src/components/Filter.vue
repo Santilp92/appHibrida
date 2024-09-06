@@ -4,7 +4,7 @@
         <ion-card-title>Filtros</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <div v-if="category === 'Computadoras y Laptops'">
+        <div v-if="category === 'PC y Laptops'">
           <ion-item>
             <ion-label>Subcategoría</ion-label>
             <ion-select v-model="filters.subcategory" placeholder="Seleccionar">
