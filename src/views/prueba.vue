@@ -109,11 +109,16 @@
   margin-right: 8px;
   background-color: transparent;
 }
-
+ion-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los elementos hijos en el eje transversal */
+}
 .new-user {
   text-align: center;
   margin-top: 32px;
   color: #603a91;
+  display: block; /* Asegura que el enlace ocupe el ancho completo de su contenedor */
 }
 </style>
 
@@ -129,7 +134,7 @@
         </ion-row>
       </ion-grid>
 
-      <ion-list>
+      <ion-list class="ion-padding">
         <div class="DATOSCONTENEDOR">
           <ion-item class="input-container">
             <img src="../assets/email.png" class="input-icon" alt="Email Icon" />
@@ -139,7 +144,6 @@
               clear-input
               class="input-field"
               inputmode="email"
-               
             ></ion-input>
           </ion-item>
 
@@ -151,7 +155,6 @@
               clear-input
               class="input-field"
               inputmode="text"
-              
             ></ion-input>
           </ion-item>
         </div>
@@ -171,16 +174,17 @@
           Ingresar con Facebook
         </ion-button>
 
-        <ion-item class="new-user">
+        <!-- Asegúrate de que el router-link esté correctamente centrado -->
+        <router-link to="/SignUP" class="new-user">
           <ion-label>¿Eres usuario nuevo?</ion-label>
-        </ion-item>
+        </router-link>
       </ion-list>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput } from '@ionic/vue';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput, } from '@ionic/vue';
 
 export default {
   name: "LoginPage",
@@ -189,6 +193,7 @@ export default {
     handleClick() {
       console.log("Botón clickeado!");
     },
+   
     // focusEmailInput() {
     //   this.$refs.emailInput.setFocus();
     // },

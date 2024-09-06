@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import Menu from '../components/Menu.vue';
+import SingUP from '../views/SingUP.vue';
+
 
 
 const routes= [
@@ -7,6 +9,11 @@ const routes= [
     path: '/',
     redirect: '/home'
   },
+  {path: '/SignUP',
+  name: 'SignUP',
+  component: SingUP,
+},
+
   {
     path: '/',
     component: Menu,
@@ -33,6 +40,7 @@ const routes= [
       },
     ],
   },
+  
 ]
 
 const router = createRouter({
