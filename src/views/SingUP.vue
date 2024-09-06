@@ -66,90 +66,130 @@
 </style>
 
 <template>
-    <ion-page>
-      <ion-content class="page-signup">
-        <!-- Imagen de fondo en la parte superior -->
-        <img class="background-top" src="../assets/top_background.png" alt="Background Top" />
-  
-        <ion-grid>
-          <ion-row class="ion-justify-content-center">
-            <ion-col size="12" size-md="6" size-lg="4">
-              <!-- Título de la página -->
-              <div class="title">Regístrate</div>
+  <ion-page>
+    <ion-content class="page-signup">
+      <!-- Imagen de fondo en la parte superior -->
+      <img class="background-top" src="../assets/top_background.png" alt="Background Top" />
+
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" size-md="6" size-lg="4">
+            <!-- Título de la página -->
+            <div class="title">Regístrate</div>
+            
+            <!-- Formulario de registro -->
+            <form class="form" @submit.prevent="signup">
+              <!-- Campo de Nombre con Imagen -->
+              <ion-item>
+                <img src="../assets/name.png" slot="start" class="input-icon" alt="Nombre Icon" />
+                <ion-input placeholder="Nombre" v-model="name"></ion-input>
+              </ion-item>
               
-              <!-- Formulario de registro -->
-              <form class="form" @submit.prevent="signup">
-                <!-- Campo de Nombre con Imagen -->
-                <ion-item>
-                  <img src="../assets/name.png" slot="start" class="input-icon" alt="Nombre Icon" />
-                  <ion-input placeholder="Nombre" v-model="name"></ion-input>
-                </ion-item>
-                
-                <!-- Campo de Correo Electrónico con Imagen -->
-                <ion-item>
-                  <img src="../assets/email.png" slot="start" class="input-icon" alt="Email Icon" />
-                  <ion-input placeholder="Correo Electrónico" type="email" v-model="email"></ion-input>
-                </ion-item>
-                
-                <!-- Campo de Contraseña con Imagen -->
-                <ion-item>
-                  <img src="../assets/password.png" slot="start" class="input-icon" alt="Password Icon" />
-                  <ion-input placeholder="Contraseña" type="password" v-model="password"></ion-input>
-                </ion-item>
-                
-                <!-- Campo de Confirmar Contraseña con Imagen -->
-                <ion-item>
-                  <img src="../assets/password.png" slot="start" class="input-icon" alt="Password Icon" />
-                  <ion-input placeholder="Confirmar Contraseña" type="password" v-model="confirmPassword"></ion-input>
-                </ion-item>
-                
-                <!-- Botón de Registro con Imagen -->
-                <ion-button fill="clear" class="custom-button" @click="handleClick">
-          <div class="image-container">
-            <img src="../assets/btn_login.png" alt="Login Button" class="login-image" />
-          </div>
-        </ion-button>
-              </form>
+              <!-- Campo de Correo Electrónico con Imagen -->
+              <ion-item>
+                <img src="../assets/email.png" slot="start" class="input-icon" alt="Email Icon" />
+                <ion-input placeholder="Correo Electrónico" type="email" v-model="email"></ion-input>
+              </ion-item>
+              
+              <!-- Campo de Contraseña con Imagen -->
+              <ion-item>
+                <img src="../assets/password.png" slot="start" class="input-icon" alt="Password Icon" />
+                <ion-input placeholder="Contraseña" type="password" v-model="password"></ion-input>
+              </ion-item>
+              
+              <!-- Campo de Confirmar Contraseña con Imagen -->
+              <ion-item>
+                <img src="../assets/password.png" slot="start" class="input-icon" alt="Password Icon" />
+                <ion-input placeholder="Confirmar Contraseña" type="password" v-model="confirmPassword"></ion-input>
+              </ion-item>
+              
+              <!-- Botón de Registro con Imagen -->
+              <ion-button fill="clear" class="custom-button" type="submit">
+                <div class="image-container">
+                  <img src="../assets/btn_login.png" alt="Login Button" class="login-image" />
+                </div>
+              </ion-button>
+            </form>
+
+            <!-- Pie con enlace a iniciar sesión -->
+            <div class="footer">
+              ¿Ya tienes una cuenta? <a href="#">Entrar</a>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-content>
+  </ion-page>
+</template>
   
-              <!-- Pie con enlace a iniciar sesión -->
-              <div class="footer">
-                ¿Ya tienes una cuenta? <a href="#">Entrar</a>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-content>
-    </ion-page>
-  </template>
+<script>
+import { ref } from 'vue';
+import { IonInput, IonButton, IonItem, IonGrid, IonRow, IonCol, IonContent, IonPage, IonToast } from '@ionic/vue';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useRouter } from 'vue-router';
+import Searchbar from '../components/Searchbar.vue';
+export default {
   
-  <script>
-  import { ref } from 'vue';
-  import { IonInput, IonButton, IonItem, IonGrid, IonRow, IonCol, IonContent, IonPage } from '@ionic/vue';
-  
-  export default {
-    name: "SignUp",
-    components: { IonInput, IonButton, IonItem, IonGrid, IonRow, IonCol, IonContent, IonPage },
-    setup() {
-      const name = ref('');
-      const email = ref('');
-      const password = ref('');
-      const confirmPassword = ref('');
-  
-      const signup = () => {
-        if (password.value === confirmPassword.value) {
-          console.log('Registrado con éxito:', { name: name.value, email: email.value });
-        } else {
-          console.log('Las contraseñas no coinciden');
-        }
-      };
-  
-      return {
-        name,
-        email,
-        password,
-        confirmPassword,
-        signup
-      };
-    }
-  };
-  </script>
+  name: "SignUp",
+  components: { IonInput, IonButton, IonItem, IonGrid, IonRow, IonCol, IonContent, IonPage, IonToast,Searchbar },
+  data() {
+    return {
+      name: '' // Definir la propiedad `name` aquí
+    };
+  },
+  setup() {
+    const name = ref(''); // Define 'name' aquí
+    const email = ref('');
+    const password = ref('');
+    const confirmPassword = ref('');
+    const showToast = ref(false);
+    const toastMessage = ref('');
+    const toastColor = ref('success');
+    const router = useRouter();
+
+    const presentToast = (message, color) => {
+      toastMessage.value = message;
+      toastColor.value = color;
+      showToast.value = true;
+    };
+
+    const signup = async () => {
+      if (password.value !== confirmPassword.value) {
+        presentToast('Las contraseñas no coinciden', 'danger');
+        return;
+      }
+
+      if (password.value.length < 6) {
+        presentToast('Por favor mínimo 6 caracteres', 'danger');
+        return;
+      }
+
+      try {
+        // Crear el usuario en Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+        const user = userCredential.user;
+        console.log('Usuario registrado con éxito:', user);
+
+        // Mostrar mensaje de éxito y redirigir a la vista `account`
+        presentToast('Creación exitosa', 'success');
+
+        router.push('/account');  // Redirige a la vista `account`
+      } catch (error) {
+        console.error('Error al registrar usuario:', error.message);
+        presentToast(error.message || 'Error al registrar usuario', 'danger');
+      }
+    };
+
+    return {
+      email,
+      password,
+      confirmPassword,
+      signup,
+      showToast,
+      toastMessage,
+      toastColor
+    };
+  }
+};
+</script>

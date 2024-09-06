@@ -184,11 +184,11 @@ ion-list {
 </template>
 
 <script>
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput, } from '@ionic/vue';
+import { IonRow, IonCol,IonGrid,IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput,IonList,IonLabel,IonButton,IonItem } from '@ionic/vue';
 
 export default {
   name: "LoginPage",
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput },
+  components: { IonRow, IonCol,IonGrid,IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput,IonList,IonLabel,IonButton,IonItem },
   methods: {
     handleClick() {
       console.log("Botón clickeado!");
