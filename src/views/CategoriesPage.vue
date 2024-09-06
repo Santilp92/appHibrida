@@ -3,6 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <searchbar />
+        <filter />
       </ion-toolbar>
     </ion-header>
 
@@ -57,6 +58,7 @@
 <script>
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonCard, IonCardContent, IonAvatar, IonLabel, IonGrid, IonRow, IonCol } from '@ionic/vue';
 import Searchbar from '../components/Searchbar.vue';
+import Filter from '../components/Filter.vue';
 
 export default {
   components: {
@@ -73,6 +75,7 @@ export default {
     IonRow,
     IonCol,
     Searchbar,
+    Filter,
   },
   data() {
     return {
