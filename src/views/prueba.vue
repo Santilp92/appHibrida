@@ -139,6 +139,7 @@
               clear-input
               class="input-field"
               inputmode="email"
+               
             ></ion-input>
           </ion-item>
 
@@ -150,6 +151,7 @@
               clear-input
               class="input-field"
               inputmode="text"
+              
             ></ion-input>
           </ion-item>
         </div>
@@ -178,15 +180,21 @@
 </template>
 
 <script>
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage } from '@ionic/vue';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput } from '@ionic/vue';
 
 export default {
   name: "LoginPage",
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput },
   methods: {
     handleClick() {
       console.log("Botón clickeado!");
     },
+    // focusEmailInput() {
+    //   this.$refs.emailInput.setFocus();
+    // },
+    // focusPasswordInput() {
+    //   this.$refs.passwordInput.setFocus();
+    // },
   },
 };
 </script>
