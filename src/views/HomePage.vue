@@ -1,3 +1,52 @@
+<style scoped>
+.scroller {
+  display: flex;
+  flex-direction: row; /* Asegura que los elementos se alineen horizontalmente */
+  overflow-x: auto; /* Habilita el desplazamiento horizontal */
+  overflow-y: hidden; /* Deshabilita el desplazamiento vertical */
+  height: 250px; /* Establece la altura para hacer las cards más grandes */
+  margin-right: 10px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none; /* Para Firefox */
+  -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Para Chrome, Safari y Opera */
+}
+
+.item-card {
+  width: 150px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-img {
+  height: 120px; /* Tamaño de la imagen */
+  object-fit: cover;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: gray;
+}
+
+.description {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Muestra puntos suspensivos cuando el texto es muy largo */
+}
+</style>
+
 <template>
   <!-- Contenido principal -->
   <ion-page id="main-content">
@@ -84,7 +133,7 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonList,
-  IonListHeader
+  IonListHeader,
 } from "@ionic/vue";
 
 import { personCircle, list } from "ionicons/icons";
@@ -114,7 +163,7 @@ export default {
     IonCardSubtitle,
     RecycleScroller,
     IonList,
-    IonListHeader
+    IonListHeader,
   },
   data() {
     const list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -130,52 +179,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.scroller {
-  display: flex;
-  flex-direction: row; /* Asegura que los elementos se alineen horizontalmente */
-  overflow-x: auto; /* Habilita el desplazamiento horizontal */
-  overflow-y: hidden; /* Deshabilita el desplazamiento vertical */
-  height: 250px; /* Establece la altura para hacer las cards más grandes */
-  margin-right: 10px;
-}
-
-.no-scrollbar {
-  scrollbar-width: none; /* Para Firefox */
-  -ms-overflow-style: none; /* Para Internet Explorer y Edge */
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none; /* Para Chrome, Safari y Opera */
-}
-
-.item-card {
-  width: 150px;
-  margin-right: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
-.card-img {
-  height: 120px; /* Tamaño de la imagen */
-  object-fit: cover;
-}
-
-.title {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.subtitle {
-  font-size: 14px;
-  color: gray;
-}
-
-.description {
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; /* Muestra puntos suspensivos cuando el texto es muy largo */
-}
-</style>
