@@ -1,10 +1,5 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <searchbar />
-      </ion-toolbar>
-    </ion-header>
     <ion-content class="products-container">
       <ion-card>
         <ion-card-header>
@@ -59,8 +54,8 @@ export default {
   setup() {
     const categoryStore = useCategoryStore();
     const category = computed(() => categoryStore.selectedCategory);
-    console.log('Category from store:', category.value);
-
+    console.log('Category from store in Product:', category.value);
+    
     return {
       category,
     };

@@ -6,9 +6,13 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-router-outlet />
+    <!-- Mostrar el ion-router-outlet solo si hay una categoría seleccionada -->
+    <ion-content v-if="selectedCategory">
+      <ion-router-outlet />
+    </ion-content>
 
-    <ion-content class="ion-padding centrar-contenido">
+    <!-- Mostrar las categorías si no hay ninguna seleccionada -->
+    <ion-content v-else class="ion-padding centrar-contenido">
       <ion-grid>
         <!-- Fila 1 -->
         <ion-row>
@@ -72,8 +76,7 @@
 import Searchbar from "../components/Searchbar.vue";
 import { useRouter } from "vue-router";
 import { useCategoryStore } from "../store/categoryStore";
-import { ref } from "vue";
-import { IonRouterOutlet } from '@ionic/vue';
+import { ref, computed } from "vue";
 import {
   IonHeader,
   IonToolbar,
@@ -87,6 +90,7 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonRouterOutlet,
 } from "@ionic/vue";
 
 export default {
@@ -104,11 +108,17 @@ export default {
     IonRow,
     IonCol,
     Searchbar,
-    IonRouterOutlet
+    IonRouterOutlet,
   },
   setup() {
+    console.log("Estoy en categorías");
+
     const categoryStore = useCategoryStore();
     const router = useRouter();
+    
+    // Computed property para obtener la categoría seleccionada del store
+    const selectedCategory = computed(() => categoryStore.getCategory());
+
     const categories = ref([
       { name: "PCyLaptops", image: "../assets/pc_laptops.png" },
       { name: "Electrodomésticos", image: "../assets/electrodomesticos.png" },
@@ -119,14 +129,15 @@ export default {
     ]);
 
     const selectCategory = (category) => {
-      console.log("selectCategory called with:", category.name); // Agrega este log
+      console.log("selectCategory llamado con:", category.name);
       categoryStore.setCategory(category.name);
       router.push({ name: "products", params: { category: category.name } });
-      console.log(`Categoría seleccionada: ${category.name}`);
+      console.log(`Categoría seleccionada para enviar a Products: ${category.name}`);
     };
 
     return {
       categories,
+      selectedCategory,
       selectCategory,
     };
   },
