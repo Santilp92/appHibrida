@@ -1,8 +1,5 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
-import Menu from "../components/Menu.vue";
 import { useCategoryStore } from "../store/categoryStore"; // Ajusta la ruta si es necesario
-
-import { createRouter, createWebHistory } from '@ionic/vue-router';
 import Menu from '../components/Menu.vue';
 import SingUP from '../views/SingUP.vue';
 
