@@ -40,7 +40,7 @@ const routes = [
       },
       {
         path: "account",
-        component: () => import("../views/AccountPage.vue"),
+        component: () => import("../views/prueba.vue"),
       },
     ],
   },
