@@ -118,6 +118,13 @@
           </ion-col>
         </ion-row>
       </ion-grid>
+      <ion-toast
+        :is-open="showToast"
+        :message="toastMessage"
+        :color="toastColor"
+        duration="2000"
+        @did-dismiss="showToast = false"
+      ></ion-toast>
     </ion-content>
   </ion-page>
 </template>
