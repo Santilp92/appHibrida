@@ -1,8 +1,8 @@
 <style scoped>
 .background-container {
-  position: relative; 
+  position: relative;
   width: 100%;
-  height: 300px; 
+  height: 300px;
 }
 
 .top-background-img {
@@ -12,19 +12,19 @@
   object-fit: cover;
   top: 0;
   left: 0;
-  z-index: -2; 
+  z-index: -2;
 }
 
 .overlay-content {
-  position: absolute; 
-  top: 50%; 
-  left: 50%; 
+  position: absolute;
+  top: 50%; /* Restaurando la posición original */
+  left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3; 
+  z-index: 3;
   background: transparent;
 }
 
@@ -52,28 +52,28 @@
 
 .input-icon {
   position: absolute;
-  top: 50%; 
-  left: 10px; 
+  top: 50%;
+  left: 10px;
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
-  z-index: 1; 
-  pointer-events: none; 
+  z-index: 1;
+  pointer-events: none;
 }
 
 .input-field {
-  flex: 1; 
-  padding-left: 40px; 
-  --color: #000000; /* Color del texto de entrada */
-  --color-placeholder: #603a91; /* Color del texto del placeholder */
+  flex: 1;
+  padding-left: 40px; /* Aseguramos que el texto no se superponga al icono */
+  --color: #000000;
+  --color-placeholder: #603a91;
   --background: #ffffff;
-  color: #000000; /* Asegura que el texto ingresado sea negro */
+  color: #000000;
   z-index: 5;
 }
 
 .custom-button {
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   cursor: pointer;
   margin-top: 10px;
   width: 100%;
@@ -87,8 +87,8 @@
 }
 
 .login-image {
-  width: 130px; 
-  height: 85px; 
+  width: 130px;
+  height: 85px;
 }
 
 .social-button {
@@ -101,24 +101,26 @@
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 50px; 
-  border: 1px solid #603a91; 
+  border-radius: 50px;
+  border: 1px solid #603a91;
 }
 
 .button-icon {
   margin-right: 8px;
   background-color: transparent;
 }
+
 ion-list {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra los elementos hijos en el eje transversal */
+  align-items: center;
 }
+
 .new-user {
   text-align: center;
   margin-top: 32px;
   color: #603a91;
-  display: block; /* Asegura que el enlace ocupe el ancho completo de su contenedor */
+  display: block;
 }
 </style>
 
@@ -144,6 +146,7 @@ ion-list {
               clear-input
               class="input-field"
               inputmode="email"
+              v-model="email"
             ></ion-input>
           </ion-item>
 
@@ -155,6 +158,7 @@ ion-list {
               clear-input
               class="input-field"
               inputmode="text"
+              v-model="password"
             ></ion-input>
           </ion-item>
         </div>
@@ -165,6 +169,7 @@ ion-list {
           </div>
         </ion-button>
 
+        <!-- Botones de redes sociales y enlace a SignUP -->
         <ion-button fill="outline" shape="round" class="social-button">
           <img src="../assets/google.png" class="button-icon" />
           Ingresar con Google
@@ -174,7 +179,6 @@ ion-list {
           Ingresar con Facebook
         </ion-button>
 
-        <!-- Asegúrate de que el router-link esté correctamente centrado -->
         <router-link to="/SignUP" class="new-user">
           <ion-label>¿Eres usuario nuevo?</ion-label>
         </router-link>
@@ -184,22 +188,46 @@ ion-list {
 </template>
 
 <script>
-import { IonRow, IonCol,IonGrid,IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput,IonList,IonLabel,IonButton,IonItem } from '@ionic/vue';
+import { IonRow, IonCol, IonGrid, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonInput, IonList, IonLabel, IonButton, IonItem } from '@ionic/vue';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 export default {
   name: "LoginPage",
-  components: { IonRow, IonCol,IonGrid,IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonInput,IonList,IonLabel,IonButton,IonItem },
+  components: {
+    IonRow, IonCol, IonGrid, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonInput, IonList, IonLabel, IonButton, IonItem
+  },
+  setup() {
+    const email = ref('');
+    const password = ref('');
+    const router = useRouter();
+
+    const handleLogin = async () => {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
+        const user = userCredential.user;
+        console.log('Inicio de sesión exitoso:', user);
+
+        // Redirigir a /home en caso de login exitoso
+        router.push('/home');
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error.message);
+        alert('Error al iniciar sesión: ' + error.message);
+      }
+    };
+
+    return {
+      email,
+      password,
+      handleLogin
+    };
+  },
   methods: {
     handleClick() {
-      console.log("Botón clickeado!");
+      this.handleLogin();
     },
-   
-    // focusEmailInput() {
-    //   this.$refs.emailInput.setFocus();
-    // },
-    // focusPasswordInput() {
-    //   this.$refs.passwordInput.setFocus();
-    // },
   },
 };
 </script>
