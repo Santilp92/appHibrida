@@ -9,6 +9,7 @@
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import Menu from './components/Menu.vue';
+import Searchbar from './components/Searchbar.vue';
 
 export default defineComponent({
   name: 'App',
@@ -16,7 +17,7 @@ export default defineComponent({
     IonApp,
     IonRouterOutlet,
     Menu,
-    
+    Searchbar
   },
 })
 
