@@ -7,64 +7,311 @@
         </ion-card-header>
       </ion-card>
 
-      <!-- Aquí agregarás la lógica para mostrar los productos filtrados -->
+      <!-- Verificar si hay productos -->
+      <ion-list class="products-container" v-if="products.length > 0">
+        <!-- Itera sobre los productos -->
+        <IonCard
+          v-for="product in products"
+          :key="product.id"
+          class="item-card"
+        >
+          <IonCardHeader>
+            <IonCardTitle>
+              {{ product.marca }} {{ product.modelo }}
+            </IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <IonGrid>
+              <IonRow>
+                <IonCol size="3">
+                  <img
+                    :src="product.foto"
+                    alt="Product Image"
+                    class="product-image"
+                  />
+                </IonCol>
+                <IonCol size="9">
+                  <!-- Verifica la categoría para mostrar los campos adecuados -->
+                  <template v-if="category === 'PcyLaptops'">
+                    <IonLabel>
+                      <h2>{{ product.marca}} {{ product.modelo}} </h2>
+                      <p>{{ product.ram }} {{ product.almacenamiento}} </p>                      
+                      <p class="price">{{ product.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+                  <template v-else-if="category === 'Electrodomesticos'">
+                    <IonLabel>
+                      <h2>{{ product.marca}} {{ product.modelo}} </h2>
+                      <p>{{ product.pantalla }} pulgadas, {{ product.sisOperativo}} </p> 
+                      <p class="price">{{ product.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+                  <template v-else-if="category === 'Celulares'">
+                    <IonLabel>
+                      <<h2>{{ product.marca}} {{ product.modelo}} </h2>
+                      <p>{{ product.pantalla }} pulgadas, {{ product.almacenamiento}} </p> 
+                      <p class="price">{{ product.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+                  <template v-else-if="category === 'Gaming'">
+                    <IonLabel>
+                      <h1>Nombre: {{ product.nombre }}</h1>
+                      <h2>{{ product.marca}} {{ product.modelo}} </h2>
+                      <p class="price">{{ product.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+                  <template v-else-if="category === 'IoT'">
+                    <IonLabel>
+                      <h1>Nombre: {{ product.nombre }}</h1>
+                      <h2>{{ product.marca}} {{ product.modelo}} </h2>
+                      <p class="price">{{ product.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+                  <template v-else-if="category === 'Accesorios'">
+                    <IonLabel>
+                      <h1>Nombre: {{ product.nombre }}</h1>
+                      <h2>{{ product.marca}} {{ product.modelo}} </h2>
+                      <p class="price">{{ product.precio }}</p>
+                    </IonLabel> 
+                  </template>
+
+                  <IonButton expand="full" @click="openModal(product)"
+                    >Ver más</IonButton
+                  >
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </IonCardContent>
+        </IonCard>
+      </ion-list>
+
+      <ion-list v-else>
+        <p>No hay productos disponibles para esta categoría.</p>
+      </ion-list>
+
+
+
+      <!-- Modal de información del producto -->
+      <IonModal
+        :isOpen="isModalOpen"
+        @didDismiss="closeModal"
+        :backdropDismiss="true"
+        class="transparent-modal"
+      >
+        <IonCard class="modal-container">
+          <IonCardHeader>
+            <IonCardTitle
+              >{{ selectedProduct.marca }}
+              {{ selectedProduct.modelo }}</IonCardTitle
+            >
+          </IonCardHeader>
+          <IonCardContent>
+            <img
+              :src="selectedProduct.foto"
+              alt="Product Image"
+              class="modal-product-image"
+            />
+            <template v-if="category === 'PcyLaptops'">
+              <p>Procesador: {{ selectedProduct.procesador }}</p>
+              <p>Pantalla: {{ selectedProduct.pantalla }} pulgadas</p>
+              <p>RAM: {{ selectedProduct.ram }}</p>
+              <p>Sistema Operativo: {{ selectedProduct.sisOperativo }}</p>
+              <p>Color: {{ selectedProduct.color}} </p>
+              <p class="price">{{ selectedProduct.precio }}</p>
+            </template>
+            
+            <template v-else-if="category === 'Electrodomesticos'">
+                    <IonLabel>
+                      <p>Modelo: {{ selectedProduct.modelo }}</p>
+                      <p>Marca: {{ selectedProduct.marca }}</p>
+                      <p>Pulgadas: {{ selectedProduct.pantalla }}</p>
+                      <p>Sistema Operativo: {{ selectedProduct.sisOperativo }}</p>
+                      <p class="price">{{ selectedProduct.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+                  <template v-else-if="category === 'Celulares'">
+                    <IonLabel>
+                      <p>Modelo: {{ selectedProduct.modelo }}</p>
+                      <p>Marca: {{ selectedProduct.marca }}</p>
+                      <p>Pantalla: {{ selectedProduct.pantalla }} pulgadas</p>
+                      <p>RAM: {{ selectedProduct.ram }}</p>
+                      <p>Almacenamiento: {{ selectedProduct.almacenamiento }}</p>
+                      <p class="price">{{ selectedProduct.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+                  <template v-else-if="category === 'Gaming'">
+                    <IonLabel>
+                      <p>Nombre: {{ selectedProduct.nombre }}</p>
+                      <p>Marca: {{ selectedProduct.marca }}</p>
+                      <p>Modelo: {{ selectedProduct.modelo }}</p>
+                      <p class="price">{{ selectedProduct.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+                  <template v-else-if="category === 'IoT'">
+                    <IonLabel>
+                      <p>Nombre: {{ selectedProduct.nombre }}</p>
+                      <p>Marca: {{ selectedProduct.marca }}</p>
+                      <p>Modelo: {{ selectedProduct.modelo }}</p>
+                      <p class="price">{{ selectedProduct.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+                  <template v-else-if="category === 'Accesorios'">
+                    <IonLabel>
+                      <p>Nombre: {{ selectedProduct.nombre }}</p>
+                      <p>Marca: {{ selectedProduct.marca }}</p>
+                      <p>Modelo: {{ selectedProduct.modelo }}</p>
+                      <p class="price">{{ selectedProduct.precio }}</p>
+                    </IonLabel>
+                  </template>
+
+            <IonButton
+              expand="full"
+              color="primary"
+              @click="addToCart(selectedProduct)"
+              >Agregar al carrito</IonButton
+            >
+            <IonButton expand="full" color="light" @click="closeModal"
+              >Cerrar</IonButton
+            >
+          </IonCardContent>
+        </IonCard>
+      </IonModal>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import Searchbar from "../components/Searchbar.vue";
+import { ref, onMounted } from "vue";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../firebase"; // Asegúrate de importar la instancia de Firestore desde firebase.js
 import { useCategoryStore } from "../store/categoryStore";
+import { computed } from "vue";
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonPage,
   IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonList,
   IonCardContent,
-  IonAvatar,
-  IonLabel,
   IonGrid,
   IonRow,
   IonCol,
-  IonCardHeader,
-  IonCardTitle,
+  IonLabel,
+  IonButton,
+  IonModal,
+  IonLoading
 } from "@ionic/vue";
-import { computed } from 'vue';
 
 export default {
+  name: "ProductsPage",
   components: {
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
     IonPage,
+    IonContent,
+    IonList,
     IonCard,
+    IonCardHeader,
+    IonCardTitle,
     IonCardContent,
-    IonAvatar,
-    IonLabel,
     IonGrid,
     IonRow,
     IonCol,
-    Searchbar,
-    IonCardHeader,
-    IonCardTitle,
+    IonLabel,
+    IonButton,
+    IonModal,
+    IonLoading
   },
-  setup() {
+  data() {
     const categoryStore = useCategoryStore();
     const category = computed(() => categoryStore.selectedCategory);
-    console.log('Category from store in Product:', category.value);
-    
+    const products = ref([]); // Aquí almacenaremos los productos
+
+    // Función para obtener los productos de Firebase según la categoría
+    const fetchProducts = async () => {
+      try {
+        // Crea la referencia a la colección según la categoría
+        const q = query(collection(db, category.value));
+        const querySnapshot = await getDocs(q);
+
+        // Mapea los documentos obtenidos a objetos de productos
+        const fetchedProducts = [];
+        querySnapshot.forEach((doc) => {
+          fetchedProducts.push({ id: doc.id, ...doc.data() });
+        });
+        products.value = fetchedProducts; // Asigna los productos a la variable reactiva
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    // Llama a la función cuando el componente se monte
+    onMounted(() => {
+      fetchProducts();
+    });
+
     return {
       category,
+      products,
+      isModalOpen: false,
+      selectedProduct: {},
     };
+  },
+  methods: {
+    openModal(product) {
+      this.selectedProduct = product;
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+      this.selectedProduct = {};
+    },
+    addToCart(product) {
+      // Lógica para agregar el producto al carrito
+      console.log("Producto agregado al carrito:", product);
+      this.closeModal();
+    },
   },
 };
 </script>
 
 <style scoped>
-.products-container {
-  padding: 10px;
+.product-image {
+  width: 100%;
+  height: auto;
+}
+
+.price {
+  color: red;
+  font-weight: bold;
+}
+
+.modal-container {
+  bottom: 0;
+  height: 100%;
+  background: white;
+  border-radius: 20px;
+}
+
+.modal-product-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+ion-modal {
+  --height: 90%;
+  --width: 75%;
+}
+
+.transparent-modal {
+  background-color: transparent !important; /* Hacer el fondo del modal transparente */
 }
 </style>

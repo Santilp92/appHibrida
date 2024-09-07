@@ -119,14 +119,14 @@ export default {
     // Computed property para obtener la categoría seleccionada del store
     const selectedCategory = computed(() => categoryStore.getCategory());
 
-    const categories = ref([
-      { name: "PCyLaptops", image: "../assets/pc_laptops.png" },
-      { name: "Electrodomésticos", image: "../assets/electrodomesticos.png" },
-      { name: "Celulares", image: "../assets/celulares.png" },
-      { name: "Gaming", image: "../assets/gaming.png" },
-      { name: "IoT", image: "../assets/iot.png" },
-      { name: "Accesorios", image: "../assets/accesorios.png" },
-    ]);
+    const categories = [
+      { name: "PcyLaptops", image: "src/assets/pc_laptops.png" },
+      { name: "Electrodomesticos", image: "src/assets/electrodomesticos.png" },
+      { name: "Celulares", image: "src/assets/celulares.png" },
+      { name: "Gaming", image: "src/assets/gaming.png" },
+      { name: "IoT", image: "src/assets/iot.png" },
+      { name: "Accesorios", image: "src/assets/accesorios.png" },
+    ];
 
     const selectCategory = (category) => {
       console.log("selectCategory llamado con:", category.name);
