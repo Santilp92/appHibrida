@@ -111,7 +111,6 @@ export default {
     IonRouterOutlet,
   },
   setup() {
-    console.log("Estoy en categorías");
 
     const categoryStore = useCategoryStore();
     const router = useRouter();

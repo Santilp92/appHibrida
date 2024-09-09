@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { useCategoryStore } from "../store/categoryStore"; // Ajusta la ruta si es necesario
 import Menu from '../components/Menu.vue';
 import SingUP from '../views/SingUP.vue';
+import RegisterPage from "../views/RegisterPage.vue";
 
 
 
@@ -37,6 +38,11 @@ const routes = [
       {
         path: "cart",
         component: () => import("../views/CartPage.vue"),
+      },
+      {
+        path: '/registerProduct',
+        name: 'RegisterProduct',
+        component: RegisterPage, 
       },
       {
         path: "account",

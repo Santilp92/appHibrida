@@ -14,9 +14,14 @@
           <ion-label>Categories</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="cart" href="/cart">
+        <ion-tab-button v-if="isAdmin" tab="registerProduct" href="/registerProduct">
+          <ion-icon :icon="addCircle"></ion-icon>
+          <ion-label>New Product</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button v-else tab="cart" href="/cart">
           <ion-icon :icon="cart" />
-          <ion-label>List</ion-label>
+          <ion-label>Shopping Cart</ion-label>
         </ion-tab-button>
 
         <ion-tab-button tab="person" href="/account">
@@ -41,7 +46,7 @@ import {
   IonIcon,
 } from "@ionic/vue";
 
-import { home, person, grid, cart } from "ionicons/icons";
+import { home, person, grid, cart, addCircle} from "ionicons/icons";
 
 export default {
   components: {
@@ -59,8 +64,19 @@ export default {
       person,
       grid,
       cart,
+      addCircle,
+      isAdmin:true
     };
   },
+
+  // mounted() {
+  //   // Verifica si el usuario autenticado es admin
+  //   const user = auth.currentUser;
+  //   if (user && user.email === "admin@hotmail.com") {
+  //     this.isAdmin = true;
+  //   }
+  // },
+
   setup() {
     const categoryStore = useCategoryStore(); // Accede a la tienda de categoría
     const router = useRouter();

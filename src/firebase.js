@@ -4,6 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 // Importa otras funciones si las necesitas, por ejemplo, Firestore
 import { getFirestore } from "firebase/firestore"; 
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 // Configuración de tu aplicación web Firebase
 const firebaseConfig = {
@@ -29,6 +30,8 @@ const db = getFirestore(app);
 // Inicializa Firebase Authentication
 const auth = getAuth(app);
 
-export { app, analytics, db,auth };
+const storage = getStorage(app);
+
+export { app, analytics, db,auth, storage };
 
 // Codigo de firebase
