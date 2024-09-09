@@ -302,7 +302,7 @@ export default {
     const productData = ref({});
     const selectCategory = async (category) => {
       selectedCategory.value = category;
-      await menuController.close(); // Cierra el menú después de seleccionar la categoría
+      await menuController.close();
     };
 
     const registerProduct = async () => {
@@ -324,9 +324,8 @@ export default {
 
         // Limpiar los campos después del registro exitoso
         productData.value = {};
-        selectedCategory.value = null;
+        // selectedCategory.value = null;
 
-        // Mostrar mensaje de éxito
         showToast("Producto registrado exitosamente", "success");
       } catch (error) {
         showToast("Error registrando producto", "danger");
