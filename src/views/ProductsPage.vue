@@ -50,7 +50,7 @@
 
                   <template v-else-if="category === 'Celulares'">
                     <IonLabel>
-                      <<h2>{{ product.marca}} {{ product.modelo}} </h2>
+                      <h2>{{ product.marca}} {{ product.modelo}} </h2>
                       <p>{{ product.pantalla }} pulgadas, {{ product.almacenamiento}} </p> 
                       <p class="price">{{ product.precio }}</p>
                     </IonLabel>
