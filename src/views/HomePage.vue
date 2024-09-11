@@ -173,8 +173,6 @@ export default {
   },
 
   mounted() {
-    console.log("Component mounted!"); // Mensaje en la consola al montar el componente
-    console.log(this.list); // Verifica que la lista esté correctamente inicializada
     this.fetchFeaturedProducts();
   },
 

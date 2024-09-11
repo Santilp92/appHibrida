@@ -44,25 +44,33 @@ export default {
   data() {
     return {
       user: null,
+      loading: true,
     };
   },
 
   methods: {
     logout() {
-      signOut(auth).then(() => {
-        this.$router.push("/home");
-      });
+      signOut(auth)
+        .then(() => {
+          this.$router.push("/home");
+        })
+        .catch((error) => {
+          console.error("Error al cerrar sesión:", error.message);
+        });
     },
   },
   mounted() {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        this.user = user;
-      } else {
-        // Si no está autenticado, redirige a la página de login dentro de 'account'
-        this.$router.push({ name: "login" });
-      }
+    // Suscribirse a los cambios en el estado de autenticación
+    this.unsubscribe = onAuthStateChanged(auth, (user) => {
+      this.user = user;
+      this.loading = false; // Termina el estado de carga una vez que se ha verificado el estado del usuario
     });
+  },
+  beforeDestroy() {
+    // Limpiar la suscripción cuando el componente se desmonte
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   },
 };
 </script>

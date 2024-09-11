@@ -239,6 +239,7 @@ export default {
   setup() {
     const email = ref("");
     const password = ref("");
+    const userName = ref("");
     const router = useRouter();
 
     const handleLogin = async () => {
@@ -250,7 +251,17 @@ export default {
         );
         const user = userCredential.user;
         console.log("Inicio de sesión exitoso:", user);
-        router.push("/home");
+
+        if (user.displayName) {
+          userName.value = user.displayName;
+        } else {
+          // Si no existe, redirige a otra página o realiza una acción alternativa
+          userName.value = "Usuario";
+        }
+
+        // Redirigir al home y pasar el nombre del usuario
+        router.push({ path: "/home", query: { name: userName.value } });
+
       } catch (error) {
         console.error("Error al iniciar sesión:", error.message);
         alert("Error al iniciar sesión: " + error.message);
@@ -261,6 +272,7 @@ export default {
       email,
       password,
       handleLogin,
+      userName,
     };
   },
   methods: {

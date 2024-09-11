@@ -1,75 +1,6 @@
-<style scoped>
-.page-signup {
-  background-color: white;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  flex: 1;
-  overflow-y: auto;
-}
-
-.logo {
-  width: 100%;
-  height: 120px;
-  margin-bottom: 20px;
-}
-
-.title {
-  font-size: 40px;
-  color: #603a91;
-  font-weight: bold;
-  text-align: center;
-}
-
-.form {
-  width: 100%;
-}
-
-.form ion-item {
-  --background: transparent;
-  --border-color: #603a91;
-  margin-bottom: 20px;
-}
-
-.form ion-input {
-  color: #603a91;
-  --placeholder-color: #603a91;
-}
-
-.custom-button {
-  display: flex;
-  justify-content: flex-end;
-  cursor: pointer;
-  margin-top: 10px;
-  width: 100%;
-}
-
-.image-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-}
-
-.login-image {
-  width: 130px;
-  height: 85px;
-}
-
-.footer {
-  margin-top: 30px;
-  text-align: center;
-  color: #603a91;
-  font-weight: bold;
-}
-</style>
-
 <template>
   <ion-page>
-    <ion-content class="page-signup" >
+    <ion-content class="page-signup">
       <!-- Imagen de fondo en la parte superior -->
       <img
         class="background-top"
@@ -183,12 +114,12 @@ import {
   IonContent,
   IonPage,
   IonToast,
-  IonLabel
+  IonLabel,
 } from "@ionic/vue";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { useRouter } from "vue-router";
-import Searchbar from "../components/Searchbar.vue";
+
 export default {
   components: {
     IonInput,
@@ -200,16 +131,10 @@ export default {
     IonContent,
     IonPage,
     IonToast,
-    Searchbar,
-    IonLabel
-  },
-  data() {
-    return {
-      name: "", // Definir la propiedad `name` aquí
-    };
+    IonLabel,
   },
   setup() {
-    const name = ref(""); // Define 'name' aquí
+    const name = ref("");
     const email = ref("");
     const password = ref("");
     const confirmPassword = ref("");
@@ -234,25 +159,26 @@ export default {
         presentToast("Por favor mínimo 6 caracteres", "danger");
         return;
       }
+      if (name.value.trim() === "") {
+        presentToast("El nombre no puede estar vacío", "danger");
+        return;
+      }
 
       try {
-        // Crear el usuario en Firebase Authentication
         const userCredential = await createUserWithEmailAndPassword(
           auth,
           email.value,
           password.value
         );
         const user = userCredential.user;
-        console.log("Usuario registrado con éxito:", user);
 
-        // Actualizar nombre de usuario en el perfil de Firebase
-        await updateProfile(user, {
-          displayName: name.value,
-        });
+        if (user) {
+          await updateProfile(user, {
+            displayName: name.value,
+          });
+        }
 
-        // Mostrar mensaje de éxito y redirigir a la vista `home`
         presentToast("Creación exitosa", "success");
-
         router.push({ path: "/home", query: { name: name.value } });
       } catch (error) {
         console.error("Error al registrar usuario:", error.message);
@@ -261,6 +187,7 @@ export default {
     };
 
     return {
+      name,
       email,
       password,
       confirmPassword,
@@ -277,3 +204,72 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.page-signup {
+  background-color: white;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.logo {
+  width: 100%;
+  height: 120px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 40px;
+  color: #603a91;
+  font-weight: bold;
+  text-align: center;
+}
+
+.form {
+  width: 100%;
+}
+
+.form ion-item {
+  --background: transparent;
+  --border-color: #603a91;
+  margin-bottom: 20px;
+}
+
+.form ion-input {
+  color: #603a91;
+  --placeholder-color: #603a91;
+}
+
+.custom-button {
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.image-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.login-image {
+  width: 130px;
+  height: 85px;
+}
+
+.footer {
+  margin-top: 30px;
+  text-align: center;
+  color: #603a91;
+  font-weight: bold;
+}
+</style>
