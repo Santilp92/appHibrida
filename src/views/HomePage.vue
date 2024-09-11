@@ -19,6 +19,7 @@
 
 .item-card {
   width: 150px;
+  height: 220px;
   margin-right: 10px;
   display: flex;
   flex-direction: column;
@@ -35,8 +36,7 @@
 }
 
 .subtitle {
-  font-size: 14px;
-  color: gray;
+  font-size: 20px;
 }
 
 .description {
@@ -52,7 +52,11 @@
   <ion-page id="main-content">
     <ion-header>
       <ion-toolbar>
-        <log-in />
+        <ion-title>
+          Bienvenido{{ $route.query.name ? ', ' + $route.query.name : '' }}
+        </ion-title>
+      </ion-toolbar>
+      <ion-toolbar>
         <searchbar />
       </ion-toolbar>
     </ion-header>
@@ -77,27 +81,21 @@
 
         <RecycleScroller
           class="scroller no-scrollbar"
-          :items="list"
+          :items="featuredProducts"
           :item-size="160"
           direction="horizontal"
         >
-          <template #default="{ item }">
+          <template v-slot="{ item }">
             <ion-card class="item-card">
-              <ion-img
-                class="card-img"
-                :src="`https://picsum.photos/seed/picsum/100/150?random=${item}`"
-                alt="Producto"
-              />
+              <ion-img class="card-img" :src="item.foto" alt="Producto" />
               <ion-card-header>
-                <ion-card-title class="title">Título {{ item }}</ion-card-title>
-                <ion-card-subtitle class="subtitle"
-                  >Subtítulo {{ item }}</ion-card-subtitle
+                <ion-card-title class="title">{{ item.nombre }}</ion-card-title>
+                <ion-card-subtitle color="danger"  class="subtitle"
+                  >{{ item.precio }}</ion-card-subtitle
                 >
               </ion-card-header>
               <ion-card-content class="description">
-                Descripción larga de producto {{ item }}. Esta descripción es un
-                ejemplo para mostrar cómo se verá cuando sea más larga de lo
-                esperado.
+                
               </ion-card-content>
             </ion-card>
           </template>
@@ -108,11 +106,13 @@
 </template>
 
 <script>
-import LogIn from "../components/LogIn.vue";
+import { db } from "../firebase.js";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import Searchbar from "../components/Searchbar.vue";
 import { RecycleScroller } from "vue-virtual-scroller";
-
+import { personCircle, list } from "ionicons/icons";
 import {
+  IonIcon,
   IonHeader,
   IonToolbar,
   IonTitle,
@@ -136,8 +136,6 @@ import {
   IonListHeader,
 } from "@ionic/vue";
 
-import { personCircle, list } from "ionicons/icons";
-
 export default {
   components: {
     IonHeader,
@@ -154,7 +152,6 @@ export default {
     IonItem,
     IonLabel,
     Searchbar,
-    LogIn,
     IonImg,
     IonCard,
     IonCardHeader,
@@ -164,18 +161,60 @@ export default {
     RecycleScroller,
     IonList,
     IonListHeader,
+    IonIcon,
   },
   data() {
-    const list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     return {
       personCircle,
       list,
+      featuredProducts: [],
     };
   },
+
   mounted() {
     console.log("Component mounted!"); // Mensaje en la consola al montar el componente
     console.log(this.list); // Verifica que la lista esté correctamente inicializada
+    this.fetchFeaturedProducts();
+  },
+
+  methods: {
+    async fetchFeaturedProducts() {
+      const categories = [
+        "PcyLaptops",
+        "Electrodomesticos",
+        "Celulares",
+        "Gaming",
+        "IoT",
+        "Accesorios",
+      ];
+      let products = [];
+
+      try {
+        for (const category of categories) {
+          const collectionRef = collection(db, category);
+          const q = query(collectionRef, where("esDes", "==", true));
+          const querySnapshot = await getDocs(q);
+
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+
+            // console.log(`Producto de la categoría ${category}:`, data);
+
+            let nombreProducto = data.nombre || `${data.marca || ''} ${data.modelo || ''}`;
+
+            products.push({
+              id: doc.id,
+              nombre: nombreProducto.trim(),
+              ...data,
+            });
+          });
+        }
+        this.featuredProducts = products;
+      } catch (error) {
+        console.error("Error fetching featured products: ", error);
+      }
+    },
   },
 };
 </script>

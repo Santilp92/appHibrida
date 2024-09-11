@@ -9,7 +9,7 @@
         </ion-tab-button>
 
         <!-- Modifica el botón de categorías -->
-        <ion-tab-button tab="grid" @click="goToCategories">
+        <ion-tab-button tab="grid" @click="goToCategories" href="/categories">
           <ion-icon :icon="grid" />
           <ion-label>Categories</ion-label>
         </ion-tab-button>
@@ -84,8 +84,9 @@ export default {
     const goToCategories = () => {
       categoryStore.clearCategory(); // Limpia la categoría seleccionada
       router.push("/categories"); // Redirige a la ruta de categorías
-      console.log(`Categoría seleccionada: ${categoryStore.selectedCategory}`);
     };
+
+    
 
     return {
       goToCategories,

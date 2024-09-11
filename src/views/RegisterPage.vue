@@ -94,6 +94,23 @@
                   <ion-label>URL foto:</ion-label>
                   <ion-input v-model="productData.foto"></ion-input>
                 </ion-item>
+                <ion-item>
+                  <ion-label>Destacado:</ion-label>
+                  <ion-radio-group
+                    v-model="productData.esDestacado"
+                    allow-empty-selection="false"
+                    value="false"
+                  >
+                    <ion-item>
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="false"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Sí</ion-label>
+                      <ion-radio slot="start" value="true"></ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
+                </ion-item>
               </ion-card>
 
               <ion-card v-if="selectedCategory === 'Electrodomesticos'">
@@ -120,6 +137,23 @@
                 <ion-item>
                   <ion-label>URL foto:</ion-label>
                   <ion-input v-model="productData.foto"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Destacado:</ion-label>
+                  <ion-radio-group
+                    v-model="productData.esDestacado"
+                    allow-empty-selection="false"
+                    value="false"
+                  >
+                    <ion-item>
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="false"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Sí</ion-label>
+                      <ion-radio slot="start" value="true"></ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
                 </ion-item>
               </ion-card>
 
@@ -152,6 +186,23 @@
                   <ion-label>URL foto:</ion-label>
                   <ion-input v-model="productData.foto"></ion-input>
                 </ion-item>
+                <ion-item>
+                  <ion-label>Destacado:</ion-label>
+                  <ion-radio-group
+                    v-model="productData.esDestacado"
+                    allow-empty-selection="false"
+                    value="false"
+                  >
+                    <ion-item>
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="false"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Sí</ion-label>
+                      <ion-radio slot="start" value="true"></ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
+                </ion-item>
               </ion-card>
 
               <ion-card v-if="selectedCategory === 'Gaming'">
@@ -174,6 +225,23 @@
                 <ion-item>
                   <ion-label>URL foto:</ion-label>
                   <ion-input v-model="productData.foto"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Destacado:</ion-label>
+                  <ion-radio-group
+                    v-model="productData.esDestacado"
+                    allow-empty-selection="false"
+                    value="false"
+                  >
+                    <ion-item>
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="false"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Sí</ion-label>
+                      <ion-radio slot="start" value="true"></ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
                 </ion-item>
               </ion-card>
 
@@ -198,6 +266,23 @@
                   <ion-label>URL foto:</ion-label>
                   <ion-input v-model="productData.foto"></ion-input>
                 </ion-item>
+                <ion-item>
+                  <ion-label>Destacado:</ion-label>
+                  <ion-radio-group
+                    v-model="productData.esDestacado"
+                    allow-empty-selection="false"
+                    value="false"
+                  >
+                    <ion-item>
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="false"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Sí</ion-label>
+                      <ion-radio slot="start" value="true"></ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
+                </ion-item>
               </ion-card>
 
               <ion-card v-if="selectedCategory === 'Accesorios'">
@@ -220,6 +305,19 @@
                 <ion-item>
                   <ion-label>URL foto:</ion-label>
                   <ion-input v-model="productData.foto"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Destacado:</ion-label>
+                  <ion-radio-group v-model="productData.esDestacado" allow-empty-selection="false" value="false">
+                    <ion-item>
+                      <ion-label>No</ion-label>
+                      <ion-radio slot="start" value="false"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Sí</ion-label>
+                      <ion-radio slot="start" value="true"></ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
                 </ion-item>
               </ion-card>
 
@@ -245,6 +343,8 @@ import {
 } from "firebase/storage";
 import { useRouter } from "vue-router";
 import {
+  IonRadio,
+  IonRadioGroup,
   IonHeader,
   IonToolbar,
   IonTitle,
@@ -273,6 +373,8 @@ import {
 
 export default {
   components: {
+    IonRadio,
+    IonRadioGroup,
     IonHeader,
     IonToolbar,
     IonTitle,

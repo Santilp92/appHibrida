@@ -11,7 +11,7 @@
   height: 100%;
   object-fit: cover;
   top: 0;
-  left: 0;
+  left: 0;  
   z-index: -2;
 }
 
@@ -139,7 +139,11 @@ ion-list {
       <ion-list class="ion-padding">
         <div class="DATOSCONTENEDOR">
           <ion-item class="input-container">
-            <img src="../assets/email.png" class="input-icon" alt="Email Icon" />
+            <img
+              src="../assets/email.png"
+              class="input-icon"
+              alt="Email Icon"
+            />
             <ion-input
               placeholder="Correo Electrónico"
               type="text"
@@ -151,7 +155,11 @@ ion-list {
           </ion-item>
 
           <ion-item class="input-container">
-            <img src="../assets/password.png" class="input-icon" alt="Password Icon" />
+            <img
+              src="../assets/password.png"
+              class="input-icon"
+              alt="Password Icon"
+            />
             <ion-input
               placeholder="Contraseña"
               type="password"
@@ -165,7 +173,11 @@ ion-list {
 
         <ion-button fill="clear" class="custom-button" @click="handleClick">
           <div class="image-container">
-            <img src="../assets/btn_login.png" alt="Login Button" class="login-image" />
+            <img
+              src="../assets/btn_login.png"
+              alt="Login Button"
+              class="login-image"
+            />
           </div>
         </ion-button>
 
@@ -179,54 +191,84 @@ ion-list {
           Ingresar con Facebook
         </ion-button>
 
-        <router-link to="/SignUP" class="new-user">
+        <ion-button fill="clear" class="new-user" @click="SignUp">
           <ion-label>¿Eres usuario nuevo?</ion-label>
-        </router-link>
+        </ion-button>
       </ion-list>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import { IonRow, IonCol, IonGrid, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonInput, IonList, IonLabel, IonButton, IonItem } from '@ionic/vue';
+import {
+  IonRow,
+  IonCol,
+  IonGrid,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonInput,
+  IonList,
+  IonLabel,
+  IonButton,
+  IonItem,
+} from "@ionic/vue";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 export default {
-  name: "LoginPage",
   components: {
-    IonRow, IonCol, IonGrid, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonInput, IonList, IonLabel, IonButton, IonItem
+    IonRow,
+    IonCol,
+    IonGrid,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonPage,
+    IonInput,
+    IonList,
+    IonLabel,
+    IonButton,
+    IonItem,
   },
   setup() {
-    const email = ref('');
-    const password = ref('');
+    const email = ref("");
+    const password = ref("");
     const router = useRouter();
 
     const handleLogin = async () => {
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email.value,
+          password.value
+        );
         const user = userCredential.user;
-        console.log('Inicio de sesión exitoso:', user);
-
-        // Redirigir a /home en caso de login exitoso
-        router.push('/home');
+        console.log("Inicio de sesión exitoso:", user);
+        router.push("/home");
       } catch (error) {
-        console.error('Error al iniciar sesión:', error.message);
-        alert('Error al iniciar sesión: ' + error.message);
+        console.error("Error al iniciar sesión:", error.message);
+        alert("Error al iniciar sesión: " + error.message);
       }
     };
 
     return {
       email,
       password,
-      handleLogin
+      handleLogin,
     };
   },
   methods: {
     handleClick() {
       this.handleLogin();
+    },
+    SignUp() {
+      this.$router.push({ path: '/account/signUp' });
     },
   },
 };

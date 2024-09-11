@@ -1,21 +1,15 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
-import { useCategoryStore } from "../store/categoryStore"; // Ajusta la ruta si es necesario
-import Menu from '../components/Menu.vue';
-import SingUP from '../views/SingUP.vue';
+import { useCategoryStore } from "../store/categoryStore";
+import Menu from "../components/Menu.vue";
 import RegisterPage from "../views/RegisterPage.vue";
-
-
+import SignUp from "../views/SignUp.vue";
+import LogIn from "../views/LogIn.vue";
 
 const routes = [
   {
     path: "/",
     redirect: "/home",
   },
-  {path: '/SignUP',
-  name: 'SignUP',
-  component: SingUP,
-},
-
   {
     path: "/",
     component: Menu,
@@ -27,26 +21,38 @@ const routes = [
       {
         path: "categories",
         component: () => import("../views/CategoriesPage.vue"),
-        children:[
+        children: [
           {
             path: ":category",
             name: "products",
-            component: () => import ("../views/ProductsPage.vue"),
+            component: () => import("../views/ProductsPage.vue"),
           },
-        ]
+        ],
       },
       {
         path: "cart",
         component: () => import("../views/CartPage.vue"),
       },
       {
-        path: '/registerProduct',
-        name: 'RegisterProduct',
-        component: RegisterPage, 
+        path: "/registerProduct",
+        name: "registerProduct",
+        component: RegisterPage,
       },
       {
         path: "account",
-        component: () => import("../views/prueba.vue"),
+        component: () => import("../views/AccountPage.vue"),
+        children: [
+          {
+            path: "logIn",
+            name: "login",
+            component: LogIn,
+          },
+          { 
+            path: "signUp",
+            name: "signup",
+            component: SignUp,
+          },
+        ],
       },
     ],
   },
