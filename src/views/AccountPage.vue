@@ -264,7 +264,7 @@ export default {
         this.user = user;
         this.fetchUserPhotoUrl();
       } else {
-        this.$router.push({ name: "login" });
+        // this.$router.push({ name: "login" });
       }
     });
   },
