@@ -48,9 +48,9 @@
         <ion-icon v-else :icon="personCircle" class="profile-icon"></ion-icon>
       </div>
 
-      <ion-button @click="editPhoto" fill="clear" class="edit-photo-button"
-        >Editar foto</ion-button
-      >
+      <ion-button @click="editPhoto" fill="clear" class="edit-photo-button">
+        Editar foto
+      </ion-button>
 
       <h2 class="ion-text-center">
         Bienvenido, {{ user.displayName || "Usuario" }}
@@ -59,10 +59,19 @@
 
       <ion-button @click="logout" expand="block">Cerrar Sesión</ion-button>
 
-      <!-- Nuevo botón de eliminar cuenta -->
-      <ion-button @click="deleteAccount" color="danger" expand="block"
-        >Eliminar Cuenta</ion-button
-      >
+      <!-- Botón de eliminar cuenta -->
+      <ion-button @click="presentAlert" color="danger" expand="block">
+        Eliminar Cuenta
+      </ion-button>
+
+      <!-- Alerta de confirmación -->
+      <ion-alert
+        :is-open="showAlert"
+        header="Confirmación"
+        message="¿Estás seguro de que deseas eliminar tu cuenta?"
+        :buttons="alertButtons"
+        @didDismiss="showAlert = false"
+      ></ion-alert>
     </ion-content>
     <ion-content v-else>
       <ion-router-outlet></ion-router-outlet>
@@ -92,11 +101,13 @@ import {
   IonTitle,
   IonButton,
   IonRouterOutlet,
+  IonAlert,
 } from "@ionic/vue";
 import { personCircle } from "ionicons/icons";
 
 export default {
   components: {
+    IonAlert,
     IonAvatar,
     IonIcon,
     IonPage,
@@ -112,10 +123,32 @@ export default {
       user: null,
       userPhotoUrl: null,
       personCircle,
+      showAlert: false,
+      alertButtons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+          handler: () => {
+            this.showAlert = false;
+          },
+        },
+        {
+          text: "Eliminar",
+          role: "confirm",
+          handler: () => {
+            this.deleteAccount();
+          },
+        },
+      ],
     };
   },
 
   methods: {
+
+    presentAlert() {
+      this.showAlert = true;
+    },
+
     async editPhoto() {
       try {
         const image = await Camera.getPhoto({
@@ -166,7 +199,7 @@ export default {
       signOut(auth)
         .then(() => {
           this.user = null;
-          this.$router.push({ path: '/home', query: {} });
+          this.$router.push({ path: "/home", query: {} });
         })
         .catch((error) => {
           console.error("Error al cerrar sesión:", error.message);
@@ -209,18 +242,16 @@ export default {
 
         // Eliminar el documento del usuario en Firestore
         await deleteDoc(userDocRef);
-        console.log("Documento de usuario eliminado de Firestore");
 
         // Eliminar el usuario de la autenticación
         await this.user.delete();
-        console.log("Cuenta de usuario eliminada");
 
         // Limpiar el estado de usuario local
         this.user = null;
         this.userPhotoUrl = null;
 
         // Redirigir al usuario a la página de inicio
-        this.$router.push({ path: '/home', query: {} });
+        this.$router.push({ path: "/home", query: {} });
       } catch (error) {
         console.error("Error al eliminar la cuenta:", error);
       }

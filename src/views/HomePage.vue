@@ -65,7 +65,7 @@
       <ion-card>
         <img src="../assets/logo.png" alt="Logo" />
         <ion-card-header>
-          <ion-card-title>Bienvenidos a la tienda online</ion-card-title>
+          <ion-card-title>TECHY</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
