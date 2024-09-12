@@ -116,6 +116,7 @@ import {
   IonToast,
   IonLabel,
 } from "@ionic/vue";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { useRouter } from "vue-router";
@@ -134,6 +135,8 @@ export default {
     IonLabel,
   },
   setup() {
+    const db = getFirestore();
+
     const name = ref("");
     const email = ref("");
     const password = ref("");
@@ -176,7 +179,12 @@ export default {
           await updateProfile(user, {
             displayName: name.value,
           });
-        }
+        };
+        
+        await setDoc(doc(db, "users", user.uid), {
+            direccion: "", // Dirección vacía
+            urlFoto: "" // URL de foto vacía
+          });
 
         presentToast("Creación exitosa", "success");
         router.push({ path: "/home", query: { name: name.value } });

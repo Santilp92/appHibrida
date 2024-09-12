@@ -14,7 +14,11 @@
           <ion-label>Categories</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button v-if="isAdmin" tab="registerProduct" href="/registerProduct">
+        <ion-tab-button
+          v-if="isAdmin"
+          tab="registerProduct"
+          href="/registerProduct"
+        >
           <ion-icon :icon="addCircle"></ion-icon>
           <ion-label>New Product</ion-label>
         </ion-tab-button>
@@ -24,7 +28,7 @@
           <ion-label>Shopping Cart</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="person" href="/account">
+        <ion-tab-button tab="person" @click="goToAccount" href="/account">
           <ion-icon :icon="person" />
           <ion-label>Account</ion-label>
         </ion-tab-button>
@@ -34,6 +38,8 @@
 </template>
 
 <script>
+import { auth } from "../firebase"; // Importa tu configuración de Firebase
+import { onAuthStateChanged } from "firebase/auth";
 import { useCategoryStore } from "../store/categoryStore"; // Importa la tienda de categoría
 import { useRouter } from "vue-router"; // Importa el router
 import {
@@ -46,7 +52,7 @@ import {
   IonIcon,
 } from "@ionic/vue";
 
-import { home, person, grid, cart, addCircle} from "ionicons/icons";
+import { home, person, grid, cart, addCircle } from "ionicons/icons";
 
 export default {
   components: {
@@ -65,7 +71,7 @@ export default {
       grid,
       cart,
       addCircle,
-      isAdmin:true
+      isAdmin: true,
     };
   },
 
@@ -81,15 +87,27 @@ export default {
     const categoryStore = useCategoryStore(); // Accede a la tienda de categoría
     const router = useRouter();
 
+    const goToAccount = () => {
+      // Comprueba si hay un usuario autenticado
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // Si el usuario está autenticado, redirige a la página de cuenta
+          router.push("/account");
+        } else {
+          // Si no está autenticado, redirige a la página de login
+          router.push("/account/logIn");
+        }
+      });
+    };
+
     const goToCategories = () => {
       categoryStore.clearCategory(); // Limpia la categoría seleccionada
       router.push("/categories"); // Redirige a la ruta de categorías
     };
 
-    
-
     return {
       goToCategories,
+      goToAccount,
     };
   },
 };
