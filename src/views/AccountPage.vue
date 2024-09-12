@@ -42,7 +42,10 @@
         <ion-title>Mi Cuenta</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content v-if="user" class="ion-padding">
+    <ion-content v-if="isLoading">
+      <ion-spinner></ion-spinner> <!-- Muestra un cargador mientras se verifica la autenticación -->
+    </ion-content>
+    <ion-content v-else-if="user" class="ion-padding">
       <div class="profile-image-container">
         <img v-if="userPhotoUrl" :src="userPhotoUrl" class="profile-image" />
         <ion-icon v-else :icon="personCircle" class="profile-icon"></ion-icon>
@@ -102,6 +105,7 @@ import {
   IonButton,
   IonRouterOutlet,
   IonAlert,
+  IonSpinner
 } from "@ionic/vue";
 import { personCircle } from "ionicons/icons";
 
@@ -117,6 +121,7 @@ export default {
     IonTitle,
     IonButton,
     IonRouterOutlet,
+    IonSpinner
   },
   data() {
     return {
@@ -124,6 +129,7 @@ export default {
       userPhotoUrl: null,
       personCircle,
       showAlert: false,
+      isLoading: true,
       alertButtons: [
         {
           text: "Cancelar",
@@ -263,8 +269,10 @@ export default {
       if (user) {
         this.user = user;
         this.fetchUserPhotoUrl();
+        this.isLoading = false;
       } else {
-        // this.$router.push({ name: "login" });
+        this.isLoading = false;
+        this.$router.push({ name: "login" });
       }
     });
   },

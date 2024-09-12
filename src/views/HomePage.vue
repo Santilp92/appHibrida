@@ -64,7 +64,7 @@
     <ion-content>
       <ion-card>
         <img src="../assets/logo.png" alt="Logo" />
-        <ion-card-header>
+        <ion-card-header class="ion-text-center">
           <ion-card-title>TECHY</ion-card-title>
         </ion-card-header>
 

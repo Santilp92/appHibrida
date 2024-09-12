@@ -180,8 +180,10 @@ export default {
             displayName: name.value,
           });
         };
+        const isAdmin = email.value === 'salp7811@hotmail.com';
         
         await setDoc(doc(db, "users", user.uid), {
+            isAdmin,
             direccion: "", // Dirección vacía
             urlFoto: "" // URL de foto vacía
           });

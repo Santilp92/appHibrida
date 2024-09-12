@@ -129,12 +129,8 @@ export default {
 
 
     const selectCategory = (category) => {
-      console.log("selectCategory llamado con:", category.name);
       categoryStore.setCategory(category.name);
       router.push({ name: "products", params: { category: category.name } });
-      console.log(
-        `Categoría seleccionada para enviar a Products: ${category.name}`
-      );
     };
 
     return {

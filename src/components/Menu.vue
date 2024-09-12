@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import { auth } from "../firebase"; // Importa tu configuración de Firebase
+import { auth, db } from "../firebase"; // Importa tu configuración de Firebase
+import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { useCategoryStore } from "../store/categoryStore"; // Importa la tienda de categoría
 import { useRouter } from "vue-router"; // Importa el router
@@ -71,17 +72,32 @@ export default {
       grid,
       cart,
       addCircle,
-      isAdmin: true,
+      isAdmin: false,
     };
   },
 
-  // mounted() {
-  //   // Verifica si el usuario autenticado es admin
-  //   const user = auth.currentUser;
-  //   if (user && user.email === "admin@hotmail.com") {
-  //     this.isAdmin = true;
-  //   }
-  // },
+  mounted() {
+    // Verifica si el usuario autenticado es admin
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // Obtén el documento del usuario en Firestore
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          this.isAdmin = userData.isAdmin;
+        }
+      } else {
+        // Si no hay usuario (ha cerrado sesión), restablece isAdmin
+        this.isAdmin = false;
+      }
+    });
+  },
+
+  methods: {
+    handleLogout() {
+      this.isAdmin = false; // Restablece isAdmin cuando el usuario cierra sesión
+    },
+  },
 
   setup() {
     const categoryStore = useCategoryStore(); // Accede a la tienda de categoría
