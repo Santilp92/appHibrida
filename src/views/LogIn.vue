@@ -250,7 +250,6 @@ export default {
           password.value
         );
         const user = userCredential.user;
-        console.log("Inicio de sesión exitoso:", user);
 
         if (user.displayName) {
           userName.value = user.displayName;
