@@ -50,9 +50,40 @@
 import { ref, onMounted } from "vue";
 import { doc, updateDoc, getDoc, deleteField } from "firebase/firestore";
 import { db, auth } from "../firebase"; // Importar Firebase
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonCard,
+  IonCardContent,
+  IonAvatar,
+  IonLabel,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonRouterOutlet,
+} from "@ionic/vue";
 
 export default {
   name: "CartPage",
+  components: {
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonPage,
+    IonCard,
+    IonCardContent,
+    IonAvatar,
+    IonLabel,
+    IonGrid,
+    IonRow,
+    IonCol,
+    Searchbar,
+    IonRouterOutlet,
+  },
   data() {
     return {
       shoppingCart: [], // Lista para almacenar los productos del carrito
