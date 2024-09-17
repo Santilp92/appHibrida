@@ -49,7 +49,8 @@
 <script>
 import { ref, onMounted } from "vue";
 import { doc, updateDoc, getDoc, deleteField } from "firebase/firestore";
-import { db, auth } from "../firebase"; // Importar Firebase
+import { db, auth } from "../firebase";
+import { getAuth } from 'firebase/auth';
 import {
   IonHeader,
   IonToolbar,
