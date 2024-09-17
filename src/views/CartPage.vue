@@ -81,7 +81,6 @@ export default {
     IonGrid,
     IonRow,
     IonCol,
-    Searchbar,
     IonRouterOutlet,
   },
   data() {
