@@ -302,11 +302,6 @@ export default {
       this.isModalOpen = false;
       this.selectedProduct = {};
     },
-    addToCart(product) {
-      // Lógica para agregar el producto al carrito
-      console.log("Producto agregado al carrito:", product);
-      this.closeModal();
-    },
 
     async addToCart(product) {
       try {
@@ -315,19 +310,17 @@ export default {
           return;
         }
 
-        // Obtener la referencia del documento del usuario
         const userRef = doc(db, "users", this.userId);
         const userDoc = await getDoc(userRef);
 
-        // Definir los detalles del producto para el carrito
         const productToAdd = {
           id: product.id,
           nombre: product.nombre || `${product.marca} ${product.modelo}`,
           precioUnitario: product.precio,
-          cantidad: 1, // Inicialmente agregar un producto con cantidad 1
+          ulrFoto: product.foto,
+          cantidad: 1, 
         };
 
-        // Si el documento del usuario no existe, lo creamos con el carrito
         if (!userDoc.exists()) {
           await setDoc(userRef, {
             shoppingCart: [productToAdd],
@@ -336,19 +329,16 @@ export default {
           const userData = userDoc.data();
           const shoppingCart = userData.shoppingCart || [];
 
-          // Buscar si el producto ya existe en el carrito
           const existingProduct = shoppingCart.find(
             (item) => item.id === product.id
           );
 
           if (existingProduct) {
-            // Si el producto ya está en el carrito, aumentar la cantidad
             existingProduct.cantidad += 1;
             await updateDoc(userRef, {
               shoppingCart,
             });
           } else {
-            // Si el producto no está en el carrito, agregarlo
             await updateDoc(userRef, {
               shoppingCart: arrayUnion(productToAdd),
             });

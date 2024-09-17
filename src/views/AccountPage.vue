@@ -1,37 +1,37 @@
 <style scoped>
-/* Contenedor de la imagen de perfil */
+
 .profile-image-container {
-  width: 150px; /* Ancho constante */
-  height: 150px; /* Altura constante */
-  border-radius: 50%; /* Hacer el contenedor circular */
-  overflow: hidden; /* Asegurar que la imagen no salga del contenedor */
+  width: 150px; 
+  height: 150px; 
+  border-radius: 50%; 
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 20px; /* Centrar el contenedor y añadir margen inferior */
-  background-color: #f0f0f0; /* Color de fondo para el ícono por defecto */
+  margin: 0 auto 20px; 
+  background-color: #f0f0f0; 
 }
 
-/* Imagen de perfil */
+
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ajustar la imagen al contenedor manteniendo la proporción */
-  border-radius: 50%; /* Hacer la imagen circular */
+  object-fit: cover; 
+  border-radius: 50%; 
 }
 
-/* Ícono de perfil por defecto */
+
 .profile-icon {
-  font-size: 100px; /* Tamaño del ícono por defecto */
-  color: #8a8a8a; /* Color gris para el ícono */
+  font-size: 100px; 
+  color: #8a8a8a; 
 }
 
-/* Estilo para centrar el botón de editar foto */
+
 .edit-photo-button {
   display: block;
-  margin: 0px auto; /* Centrar el botón */
-  width: auto; /* Ancho del botón ajustado automáticamente */
-  padding: 0 100px; /* Espaciado horizontal dentro del botón */
+  margin: 0px auto; 
+  width: auto; 
+  padding: 0 100px; 
 }
 </style>
 
@@ -43,7 +43,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content v-if="isLoading">
-      <ion-spinner></ion-spinner> <!-- Muestra un cargador mientras se verifica la autenticación -->
+      <ion-spinner></ion-spinner> 
     </ion-content>
     <ion-content v-else-if="user" class="ion-padding">
       <div class="profile-image-container">
@@ -62,12 +62,12 @@
 
       <ion-button @click="logout" expand="block">Cerrar Sesión</ion-button>
 
-      <!-- Botón de eliminar cuenta -->
+      
       <ion-button @click="presentAlert" color="danger" expand="block">
         Eliminar Cuenta
       </ion-button>
 
-      <!-- Alerta de confirmación -->
+      
       <ion-alert
         :is-open="showAlert"
         header="Confirmación"
@@ -205,6 +205,7 @@ export default {
       signOut(auth)
         .then(() => {
           this.user = null;
+          this.userPhotoUrl = null;
           this.$router.push({ path: "/home", query: {} });
         })
         .catch((error) => {
