@@ -85,7 +85,7 @@ export default {
     IonCol,
     IonRouterOutlet,
     IonList,
-    IonButton.
+    IonButton,
   },
   data() {
     return {
