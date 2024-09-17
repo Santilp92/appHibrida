@@ -64,6 +64,8 @@ import {
   IonRow,
   IonCol,
   IonRouterOutlet,
+  IonList,
+  IonButton,
 } from "@ionic/vue";
 
 export default {
@@ -82,6 +84,8 @@ export default {
     IonRow,
     IonCol,
     IonRouterOutlet,
+    IonList,
+    IonButton.
   },
   data() {
     return {
