@@ -106,9 +106,10 @@ export default {
   methods: {
     // Formatear a moneda
     currencyFormat(value) {
-      return new Intl.NumberFormat("es-ES", {
+      return new Intl.NumberFormat("es-CO", {
         style: "currency",
-        currency: "USD",
+        currency: "COP",
+        minimumFractionDigits: 0
       }).format(value);
     },
 
@@ -200,6 +201,9 @@ export default {
         this.fetchCart(); // Escuchar cambios en tiempo real en el carrito del usuario autenticado
       } else {
         console.log("No hay usuario autenticado.");
+        // Si no hay usuario, vaciar el carrito
+        this.shoppingCart = [];
+        this.userId = null;
       }
     });
   },
