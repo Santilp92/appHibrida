@@ -44,13 +44,19 @@
         </ion-card>
       </ion-list>
 
+      <!-- Mostrar el precio total del carrito -->
+      <ion-card>
+        <ion-card-content>
+          <h2>Total del carrito: {{ calculateCartTotal() | currencyFormat }}</h2>
+        </ion-card-content>
+      </ion-card>
+
       <!-- Botón para vaciar el carrito -->
       <ion-button expand="full" color="danger" @click="emptyCart">
         Vaciar carrito
       </ion-button>
     </ion-content>
   </ion-page>
-  
 </template>
 
 <script>
@@ -71,6 +77,7 @@ import {
   IonList,
   IonButton,
   IonCard,
+  IonCardContent,
 } from "@ionic/vue";
 
 export default {
@@ -87,6 +94,7 @@ export default {
     IonList,
     IonButton,
     IonCard,
+    IonCardContent,
   },
   data() {
     return {
@@ -107,6 +115,14 @@ export default {
     // Obtener el total de un producto (cantidad * precio unitario)
     calculateTotal(product) {
       return product.cantidad * product.precioUnitario;
+    },
+
+    // Método para calcular el total de todos los productos en el carrito
+    calculateCartTotal() {
+      return this.shoppingCart.reduce(
+        (total, product) => total + this.calculateTotal(product),
+        0
+      );
     },
 
     // Cargar productos desde Firebase al montar el componente
