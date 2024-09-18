@@ -13,11 +13,17 @@
           <ion-grid>
             <ion-row>
               <ion-col size="3">
-                <img :src="product.ulrFoto" alt="product.name" class="product-image" />
+                <img
+                  :src="product.ulrFoto"
+                  alt="product.name"
+                  class="product-image"
+                />
               </ion-col>
               <ion-col size="6">
                 <h2>{{ product.nombre }}</h2>
-                <p>Precio unitario: {{ product.precioUnitario | currencyFormat }}</p>
+                <p>
+                  Precio unitario: {{ product.precioUnitario | currencyFormat }}
+                </p>
                 <p>Cantidad: {{ product.cantidad }}</p>
                 <p>Total: {{ calculateTotal(product) | currencyFormat }}</p>
               </ion-col>
@@ -44,54 +50,49 @@
       </ion-button>
     </ion-content>
   </ion-page>
+  
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { doc, updateDoc, getDoc, deleteField } from "firebase/firestore";
-import { db, auth } from "../firebase";
-import { getAuth } from 'firebase/auth';
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { doc, updateDoc, onSnapshot, deleteField } from "firebase/firestore";
+import { db } from "../firebase";
+import { getAuth } from "firebase/auth";
+import { onIonViewWillEnter } from "@ionic/vue"; 
 import {
+  IonRow,
+  IonCol,
+  IonGrid,
   IonHeader,
   IonToolbar,
   IonTitle,
   IonContent,
   IonPage,
-  IonCard,
-  IonCardContent,
-  IonAvatar,
-  IonLabel,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonRouterOutlet,
   IonList,
   IonButton,
+  IonCard,
 } from "@ionic/vue";
 
 export default {
   name: "CartPage",
   components: {
+    IonRow,
+    IonCol,
+    IonGrid,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
     IonPage,
-    IonCard,
-    IonCardContent,
-    IonAvatar,
-    IonLabel,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonRouterOutlet,
     IonList,
     IonButton,
+    IonCard,
   },
   data() {
     return {
       shoppingCart: [], // Lista para almacenar los productos del carrito
       userId: null, // ID del usuario autenticado
+      unsubscribe: null, // Listener para cambios en tiempo real
     };
   },
   methods: {
@@ -112,11 +113,12 @@ export default {
     async fetchCart() {
       try {
         const userRef = doc(db, "users", this.userId);
-        const userDoc = await getDoc(userRef);
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          this.shoppingCart = userData.shoppingCart || [];
-        }
+        this.unsubscribe = onSnapshot(userRef, (doc) => {
+          if (doc.exists()) {
+            const userData = doc.data();
+            this.shoppingCart = userData.shoppingCart || [];
+          }
+        });
       } catch (error) {
         console.error("Error fetching cart: ", error);
       }
@@ -174,16 +176,28 @@ export default {
     },
   },
 
-  // Cargar productos cuando el componente se monte
   async mounted() {
     const auth = getAuth();
-    const user = auth.currentUser;
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.userId = user.uid;
+        this.fetchCart(); // Escuchar cambios en tiempo real en el carrito del usuario autenticado
+      } else {
+        console.log("No hay usuario autenticado.");
+      }
+    });
+  },
 
-    if (user) {
-      this.userId = user.uid;
-      await this.fetchCart(); // Obtener carrito del usuario autenticado
-    } else {
-      console.log("No hay usuario autenticado.");
+  // Usar el ciclo de vida `onIonViewWillEnter` para recargar el carrito al entrar en la página
+  onIonViewWillEnter() {
+    if (this.userId) {
+      this.fetchCart(); // Recargar el carrito cuando se entra en la página
+    }
+  },
+
+  onBeforeUnmount() {
+    if (this.unsubscribe) {
+      this.unsubscribe(); // Desactivar el listener cuando el componente se destruya
     }
   },
 };
