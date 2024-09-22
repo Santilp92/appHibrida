@@ -183,7 +183,7 @@ export default {
             displayName: name.value,
           });
         }
-        const isAdmin = email.value === "salp7811@hotmail.com";
+        const isAdmin = email.value === "admin@techy.com";
 
         await setDoc(doc(db, "users", user.uid), {
           isAdmin,
