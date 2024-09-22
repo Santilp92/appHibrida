@@ -96,7 +96,7 @@
         :message="toastMessage"
         :color="toastColor"
         duration="2000"
-        @did-dismiss="showToast = false"
+        
       ></ion-toast>
     </ion-content>
   </ion-page>
@@ -120,6 +120,7 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { useRouter } from "vue-router";
+import { useAuthStore } from '../store/useAuthStore';
 
 export default {
   components: {
@@ -145,11 +146,13 @@ export default {
     const toastMessage = ref("");
     const toastColor = ref("success");
     const router = useRouter();
+    const authStore = useAuthStore();
 
     const presentToast = (message, color) => {
       toastMessage.value = message;
       toastColor.value = color;
       showToast.value = true;
+      console.log("Toast message:", message); // Debug
     };
 
     const signup = async () => {
@@ -179,17 +182,19 @@ export default {
           await updateProfile(user, {
             displayName: name.value,
           });
-        };
-        const isAdmin = email.value === 'salp7811@hotmail.com';
-        
-        await setDoc(doc(db, "users", user.uid), {
-            isAdmin,
-            direccion: "", // Dirección vacía
-            urlFoto: "" // URL de foto vacía
-          });
+        }
+        const isAdmin = email.value === "salp7811@hotmail.com";
 
+        await setDoc(doc(db, "users", user.uid), {
+          isAdmin,
+          direccion: "", // Dirección vacía
+          urlFoto: "", // URL de foto vacía
+        });
+        
+        authStore.setSignUpSuccess(true);
         presentToast("Creación exitosa", "success");
-        router.push({ path: "/home", query: { name: name.value } });
+        router.push({ path: "/home", query: { name: name.value, } });
+
       } catch (error) {
         console.error("Error al registrar usuario:", error.message);
         presentToast(error.message || "Error al registrar usuario", "danger");

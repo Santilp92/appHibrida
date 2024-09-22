@@ -53,7 +53,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>
-          Bienvenido{{ $route.query.name ? ', ' + $route.query.name : '' }}
+          Bienvenido{{ $route.query.name ? ", " + $route.query.name : "" }}
         </ion-title>
       </ion-toolbar>
       <ion-toolbar>
@@ -62,6 +62,13 @@
     </ion-header>
 
     <ion-content>
+      <ion-toast
+        :is-open="showToast"
+        :message="toastMessage"
+        :color="toastColor"
+        duration="2000"
+        @did-dismiss="resetToast"
+      ></ion-toast>
       <ion-card>
         <img src="../assets/logo.png" alt="Logo" />
         <ion-card-header class="ion-text-center">
@@ -90,13 +97,11 @@
               <ion-img class="card-img" :src="item.foto" alt="Producto" />
               <ion-card-header>
                 <ion-card-title class="title">{{ item.nombre }}</ion-card-title>
-                <ion-card-subtitle color="danger"  class="subtitle"
-                  >{{ item.precio }}</ion-card-subtitle
-                >
+                <ion-card-subtitle color="danger" class="subtitle">{{
+                  item.precio
+                }}</ion-card-subtitle>
               </ion-card-header>
-              <ion-card-content class="description">
-                
-              </ion-card-content>
+              <ion-card-content class="description"> </ion-card-content>
             </ion-card>
           </template>
         </RecycleScroller>
@@ -110,7 +115,9 @@ import { db } from "../firebase.js";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Searchbar from "../components/Searchbar.vue";
 import { RecycleScroller } from "vue-virtual-scroller";
+import { useAuthStore } from "../store/useAuthStore";
 import { personCircle, list } from "ionicons/icons";
+import { watch } from "vue";
 import {
   IonIcon,
   IonHeader,
@@ -134,6 +141,7 @@ import {
   IonCardSubtitle,
   IonList,
   IonListHeader,
+  IonToast,
 } from "@ionic/vue";
 
 export default {
@@ -162,18 +170,34 @@ export default {
     IonList,
     IonListHeader,
     IonIcon,
+    IonToast,
   },
   data() {
-
     return {
       personCircle,
       list,
       featuredProducts: [],
+      showToast: false, // Estado para el Toast
+      toastMessage: "",
+      toastColor: "",
     };
   },
 
   mounted() {
+    const authStore = useAuthStore();
     this.fetchFeaturedProducts();
+
+    // Usamos watch para detectar cambios en isSignUpSuccess
+    watch(
+      () => authStore.isSignUpSuccess,
+      (newValue) => {
+        if (newValue) {
+          this.showWelcomeToast(authStore.userName);
+          authStore.clearSignUpState(); // Limpiamos el estado de registro exitoso
+        }
+      },
+      { immediate: true } // Ejecuta el watch inmediatamente al montar
+    );
   },
 
   methods: {
@@ -199,7 +223,8 @@ export default {
 
             // console.log(`Producto de la categoría ${category}:`, data);
 
-            let nombreProducto = data.nombre || `${data.marca || ''} ${data.modelo || ''}`;
+            let nombreProducto =
+              data.nombre || `${data.marca || ""} ${data.modelo || ""}`;
 
             products.push({
               id: doc.id,
@@ -212,6 +237,17 @@ export default {
       } catch (error) {
         console.error("Error fetching featured products: ", error);
       }
+    },
+    showWelcomeToast(userName) {
+      this.toastMessage = `Registro Exitoso!`;
+      this.toastColor = "success";
+      this.showToast = true;
+    },
+
+    resetToast() {
+      this.showToast = false;
+      this.toastMessage = "";
+      this.toastColor = "";
     },
   },
 };
